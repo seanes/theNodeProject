@@ -1,0 +1,257 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "The Node Project",
+        "description": "Event Management Tool",
+        "version": "0.0.1"
+    },
+    "host": "localhost",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/events": {
+            "get": {
+                "summary": "Events",
+                "description": "The Events endpoint returns all available events\n",
+                "tags": [
+                    "Events"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Events",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Event"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{id}": {
+            "get": {
+                "summary": "Events",
+                "description": "The Events endpoint returns all availableevents\n",
+                "tags": [
+                    "Events"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The event id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Event by id",
+                        "schema": {
+                            "$ref": "#/definitions/Event"
+                        }
+                    },
+                    "404": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "enum": [
+                        "admin",
+                        "user"
+                    ]
+                },
+                "active": {
+                    "type": "boolean",
+                    "description": "If false, the user is no longer active, i.e. account deactivated"
+                }
+            }
+        },
+        "Profile": {
+            "type": "object",
+            "properties": {
+                "profile_id": {
+                    "type": "string"
+                },
+                "karma_points": {
+                    "type": "number"
+                },
+                "event_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Event"
+                    }
+                },
+                "profile_image": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "Location": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "location_name": {
+                    "type": "string"
+                },
+                "etage": {
+                    "type": "number"
+                },
+                "geolocation": {
+                    "type": "object",
+                    "properties": {
+                        "lat": {
+                            "type": "number",
+                            "format": "double"
+                        },
+                        "lng": {
+                            "type": "number",
+                            "format": "double"
+                        }
+                    }
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "Event": {
+            "type": "object",
+            "properties": {
+                "event_id": {
+                    "type": "string",
+                    "description": "Unique identifier representing a specific event"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of event."
+                },
+                "event_name": {
+                    "type": "string",
+                    "description": "Display name of event."
+                },
+                "image": {
+                    "type": "string",
+                    "description": "Base64 representing the event."
+                },
+                "capacity": {
+                    "type": "number",
+                    "description": "Number of max participants"
+                },
+                "event_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date for the event"
+                },
+                "participation_deadline": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Deadline for registrering and unregistrering to the event"
+                },
+                "event_status": {
+                    "type": "string",
+                    "enum": [
+                        "active",
+                        "expired",
+                        "cancelled"
+                    ],
+                    "description": "Status for event"
+                },
+                "event_type": {
+                    "type": "string",
+                    "enum": [
+                        "workshop",
+                        "talk",
+                        "party"
+                    ],
+                    "description": "Type of event"
+                },
+                "event_location": {
+                    "type": "object",
+                    "description": "Location object",
+                    "properties": {
+                        "schema": {
+                            "$ref": "#/definitions/Location"
+                        }
+                    }
+                },
+                "participants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/User"
+                    },
+                    "description": "List of registered participants"
+                },
+                "attended_partcipants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/User"
+                    },
+                    "description": "List of participants who has attended"
+                },
+                "hosts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/User"
+                    }
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

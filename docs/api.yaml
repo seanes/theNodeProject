@@ -1,16 +1,12 @@
-# this is an example of the Uber API
-# as a demonstration of an API spec in YAML
+# this is an example of the Node Project API
 swagger: '2.0'
 info:
   title: The Node Project
   description: Event Management Tool
   version: "0.0.1"
-# the domain of the service
 host: localhost
-# array of all schemes that your API supports
 schemes:
   - http
-# will be prefixed to all paths
 basePath: /v1
 produces:
   - application/json
@@ -19,7 +15,7 @@ paths:
     get:
       summary: Events
       description: |
-        The Events endpoint returns all availableevents
+        The Events endpoint returns all available events
       tags:
         - Events
       responses:
@@ -33,7 +29,7 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /event/{id}:
+  /events/{id}:
     get:
       summary: Events
       description: |
@@ -60,7 +56,7 @@ definitions:
   User:
     type: object
     properties:
-      user_id: 
+      user_id:
         type: string
       name:
         type: string
@@ -73,6 +69,7 @@ definitions:
         enum: ["admin","user"]
       active:
         type: boolean
+        description: If false, the user is no longer active, i.e. account deactivated
   Profile:
     type: object
     properties:
@@ -115,7 +112,7 @@ definitions:
     properties:
       event_id:
         type: string
-        description: Unique identifier representing a specific event 
+        description: Unique identifier representing a specific event
       description:
         type: string
         description: Description of event.
@@ -131,7 +128,7 @@ definitions:
       event_date:
         type: string
         format: date
-        description: Date for the event 
+        description: Date for the event
       participation_deadline:
         type: string
         format: date
@@ -147,6 +144,9 @@ definitions:
       event_location:
         type: object
         description: Location object
+        properties:
+          schema:
+            $ref: '#/definitions/Location'
       participants:
         type: array
         items:
@@ -168,6 +168,4 @@ definitions:
         type: integer
         format: int32
       message:
-        type: string
-      fields:
         type: string
