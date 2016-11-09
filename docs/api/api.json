@@ -156,7 +156,15 @@
                         "required": true,
                         "description": "Id for event",
                         "type": "string",
-                        "format": " - event: \"event\" in: body required: true schema: $ref: "
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "event",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Event"
+                        }
                     }
                 ],
                 "responses": {

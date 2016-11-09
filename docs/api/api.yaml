@@ -112,8 +112,8 @@ paths:
           required: true
           description: Id for event
           type: string
-          format: '
-        - event: "event"
+          format: uuid
+        - name: event
           in: body
           required: true
           schema:
