@@ -19,13 +19,14 @@ paths:
       tags:
         - Profile
       parameters:
-        - id: id
+        - name: id
           in: path
           required: true
           type: string
           format: uuid
       responses:
         200:
+          description: success
           schema:
             $ref: '#/definitions/Profile'
         404:
@@ -58,17 +59,15 @@ paths:
       tags:
         - Event
       parameters:
-        - event: event
+        - name: event
           in: body
           description: event
           required: true
-          type: object
           schema:
             $ref: '#/definitions/Event'
       responses:
         200:
           description: Creted event
-          type: object
           schema:
             $ref: '#/definitions/Event'
         405:
@@ -111,19 +110,17 @@ paths:
         - name: id
           in: path
           required: true
-          schema:
-            type: string
-            format: uuid
+          description: Id for event
+          type: string
+          format: '
         - event: "event"
           in: body
           required: true
-          type: object
           schema:
             $ref: '#/definitions/Event'
       responses:
         200:
           description: Updated event
-          type: object
           schema:
             $ref: '#/definitions/Event'
         405:
