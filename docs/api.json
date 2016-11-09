@@ -1,257 +1,490 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "The Node Project",
-        "description": "Event Management Tool",
-        "version": "0.0.1"
-    },
-    "host": "localhost",
-    "schemes": [
-        "http"
-    ],
-    "basePath": "/v1",
-    "produces": [
-        "application/json"
-    ],
-    "paths": {
-        "/events": {
-            "get": {
-                "summary": "Events",
-                "description": "The Events endpoint returns all available events\n",
-                "tags": [
-                    "Events"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "An array of Events",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Event"
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "Unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
+  "swagger": "2.0",
+  "info": {
+    "title": "The Node Project",
+    "description": "Event Management Tool",
+    "version": "0.0.1"
+  },
+  "host": "localhost",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/v1",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/profile/{id}": {
+      "get": {
+        "summary": "Returns user profile",
+        "description": "Returns the profile of the user in session",
+        "tags": [
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "id": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Profile"
             }
-        },
-        "/events/{id}": {
-            "get": {
-                "summary": "Events",
-                "description": "The Events endpoint returns all availableevents\n",
-                "tags": [
-                    "Events"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The event id",
-                        "required": true,
-                        "type": "string",
-                        "format": "uuid"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Event by id",
-                        "schema": {
-                            "$ref": "#/definitions/Event"
-                        }
-                    },
-                    "404": {
-                        "description": "Unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
             }
+          }
         }
+      }
     },
-    "definitions": {
-        "User": {
-            "type": "object",
-            "properties": {
-                "user_id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "role": {
-                    "type": "string",
-                    "enum": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "active": {
-                    "type": "boolean",
-                    "description": "If false, the user is no longer active, i.e. account deactivated"
-                }
+    "/events": {
+      "get": {
+        "summary": "Events",
+        "description": "The Events endpoint returns all events",
+        "tags": [
+          "Events"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of Events",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
             }
-        },
-        "Profile": {
-            "type": "object",
-            "properties": {
-                "profile_id": {
-                    "type": "string"
-                },
-                "karma_points": {
-                    "type": "number"
-                },
-                "event_history": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Event"
-                    }
-                },
-                "profile_image": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
             }
-        },
-        "Location": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "address": {
-                    "type": "string"
-                },
-                "location_name": {
-                    "type": "string"
-                },
-                "etage": {
-                    "type": "number"
-                },
-                "geolocation": {
-                    "type": "object",
-                    "properties": {
-                        "lat": {
-                            "type": "number",
-                            "format": "double"
-                        },
-                        "lng": {
-                            "type": "number",
-                            "format": "double"
-                        }
-                    }
-                },
-                "description": {
-                    "type": "string"
-                }
-            }
-        },
-        "Event": {
-            "type": "object",
-            "properties": {
-                "event_id": {
-                    "type": "string",
-                    "description": "Unique identifier representing a specific event"
-                },
-                "description": {
-                    "type": "string",
-                    "description": "Description of event."
-                },
-                "event_name": {
-                    "type": "string",
-                    "description": "Display name of event."
-                },
-                "image": {
-                    "type": "string",
-                    "description": "Base64 representing the event."
-                },
-                "capacity": {
-                    "type": "number",
-                    "description": "Number of max participants"
-                },
-                "event_date": {
-                    "type": "string",
-                    "format": "date",
-                    "description": "Date for the event"
-                },
-                "participation_deadline": {
-                    "type": "string",
-                    "format": "date",
-                    "description": "Deadline for registrering and unregistrering to the event"
-                },
-                "event_status": {
-                    "type": "string",
-                    "enum": [
-                        "active",
-                        "expired",
-                        "cancelled"
-                    ],
-                    "description": "Status for event"
-                },
-                "event_type": {
-                    "type": "string",
-                    "enum": [
-                        "workshop",
-                        "talk",
-                        "party"
-                    ],
-                    "description": "Type of event"
-                },
-                "event_location": {
-                    "type": "object",
-                    "description": "Location object",
-                    "properties": {
-                        "schema": {
-                            "$ref": "#/definitions/Location"
-                        }
-                    }
-                },
-                "participants": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/User"
-                    },
-                    "description": "List of registered participants"
-                },
-                "attended_partcipants": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/User"
-                    },
-                    "description": "List of participants who has attended"
-                },
-                "hosts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/User"
-                    }
-                }
-            }
-        },
-        "Error": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
+          }
         }
+      },
+      "post": {
+        "description": "Create an event",
+        "tags": [
+          "Event"
+        ],
+        "parameters": [
+          {
+            "event": "event",
+            "in": "body",
+            "description": "event",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Creaed event",
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "summary": "Events",
+        "description": "The Events endpoint returns all availableevents",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The event id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event by id",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          },
+          "404": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Update an event",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "event": "event",
+            "in": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated event",
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/locations": {
+      "get": {
+        "description": "List of locations",
+        "tags": [
+          "Locations"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of Locations",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Location"
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new location",
+        "tags": [
+          "Locations"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New location created",
+            "schema": {
+              "$ref": "#/definitions/Location"
+            }
+          },
+          "500": {
+            "description": "Unable to create location",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/locations/{id}": {
+      "get": {
+        "description": "Get location by id",
+        "tags": [
+          "Locations"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location",
+            "schema": {
+              "$ref": "#/definitions/Location"
+            }
+          },
+          "404": {
+            "description": "Location not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Update location by id",
+        "tags": [
+          "Locations"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location",
+            "schema": {
+              "$ref": "#/definitions/Location"
+            }
+          },
+          "404": {
+            "description": "Location not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "admin",
+            "user"
+          ]
+        },
+        "active": {
+          "type": "boolean",
+          "description": "If false, the user is no longer active, i.e. account deactivated"
+        }
+      }
+    },
+    "Profile": {
+      "type": "object",
+      "properties": {
+        "profile_id": {
+          "type": "string"
+        },
+        "karma_points": {
+          "type": "number"
+        },
+        "event_history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Event"
+          }
+        },
+        "profile_image": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "location_name": {
+          "type": "string"
+        },
+        "etage": {
+          "type": "number"
+        },
+        "geolocation": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number",
+              "format": "double"
+            },
+            "lng": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "description": "Unique identifier representing a specific event"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of event."
+        },
+        "event_name": {
+          "type": "string",
+          "description": "Display name of event."
+        },
+        "image": {
+          "type": "string",
+          "description": "Base64 representing the event."
+        },
+        "capacity": {
+          "type": "number",
+          "description": "Number of max participants"
+        },
+        "event_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date for the event"
+        },
+        "participation_deadline": {
+          "type": "string",
+          "format": "date",
+          "description": "Deadline for registrering and unregistrering to the event"
+        },
+        "event_status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "expired",
+            "cancelled"
+          ],
+          "description": "Status for event"
+        },
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "workshop",
+            "talk",
+            "party"
+          ],
+          "description": "Type of event"
+        },
+        "event_location": {
+          "description": "Location object reference id",
+          "type": "string",
+          "format": "uuid"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          },
+          "description": "List of registered participants"
+        },
+        "attended_partcipants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          },
+          "description": "List of participants who has attended"
+        },
+        "hosts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }
