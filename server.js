@@ -1,9 +1,9 @@
 'use strict';
 
-//dependencies
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+//imports
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
 
 const config = require("./config/config");
 

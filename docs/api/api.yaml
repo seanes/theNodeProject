@@ -57,7 +57,7 @@ paths:
       description:
         Create an event
       tags:
-        - Event
+        - Events
       parameters:
         - name: event
           in: body
@@ -106,6 +106,8 @@ paths:
       description: Update an event
       consumes:
         - application/json
+      tags:
+        - Events
       parameters:
         - name: id
           in: path
@@ -263,6 +265,8 @@ definitions:
             format: double
       description:
         type: string
+      active:
+        type: boolean
   Event:
     type: object
     properties:

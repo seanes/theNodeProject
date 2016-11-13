@@ -1,1 +1,7 @@
+# IDEA specific
 .idea/
+
+# depedencies
+node_modules
+# log
+npm-debug.log

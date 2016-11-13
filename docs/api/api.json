@@ -77,7 +77,7 @@
             "post": {
                 "description": "Create an event",
                 "tags": [
-                    "Event"
+                    "Events"
                 ],
                 "parameters": [
                     {
@@ -148,6 +148,9 @@
                 "description": "Update an event",
                 "consumes": [
                     "application/json"
+                ],
+                "tags": [
+                    "Events"
                 ],
                 "parameters": [
                     {
@@ -389,6 +392,9 @@
                 },
                 "description": {
                     "type": "string"
+                },
+                "active": {
+                    "type": "boolean"
                 }
             }
         },
