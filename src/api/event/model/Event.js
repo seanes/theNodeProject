@@ -12,7 +12,8 @@ const EventSchema = new Schema({
     event_type : {type : String, enum: ["workshop","talk", "party"], require: true},
     event_location : {type : String, require: true},
     participants : {type : Array, default : []},
-    hosts : {type: Array, require: true}
+    hosts : {type: Array, require: true},
+    attended_participants: { type: Array, default: []}
 });
 
 export default mongoose.model('Event', EventSchema);

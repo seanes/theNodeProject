@@ -26,3 +26,5 @@ app.listen(port, () =>{
         console.log(`Magic is happening on http://localhost:${port}`);
     });
 })
+
+export default app;
