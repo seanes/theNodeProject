@@ -1,8 +1,6 @@
-'use strict';
-
-const express = require('express');
-const mongoose = require('mongoose');
-const Event = require('../model/Event');
+import express from 'express';
+import mongoose from 'mongoose';
+import Event from '../model/Event';
 const router = express.Router();
 
 router.route('/')
@@ -10,9 +8,15 @@ router.route('/')
         Event.find({}, (err, events) => {
             if(err)
                 res.status(400).json(err);
-            
+
             res.status(200).json(events)
         });
     });
 
-module.exports = router;
+router.route('/:id')
+    .get((req, res) => {
+        const requestId = req.params.id;
+        res.send(requestId);
+    });
+
+export default router;

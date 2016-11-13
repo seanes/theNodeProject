@@ -1,11 +1,11 @@
-'use strict';
-
 //imports
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import config from "./config/config";
 
-const config = require("./config/config");
+import getEventsRouter from './src/api/event/routes/get_events';
+import postEventsrouter from './src/api/event/routes/post_events';
 
 const app = express();
 const port = process.env.PORT || 1337;
@@ -13,9 +13,8 @@ const port = process.env.PORT || 1337;
 app.use(bodyParser.urlencoded({extended:true}));
 
 //routes
-app.use('/api/events', require('./api/event/routes/get_events'));
-app.use('/api/event', require('./api/event/routes/get_event'));
-app.use('/api/event', require('./api/event/routes/post_event'));
+app.use('/api/events', getEventsRouter);
+app.use('/api/events', postEventsrouter);
 
 //kickstart server
 app.listen(port, () =>{
@@ -24,6 +23,6 @@ app.listen(port, () =>{
         if(err){
             console.log(err);
         }
-         console.log("Magic is happening on port: ", port);
+        console.log(`Magic is happening on http://localhost:${port}`);
     });
 })

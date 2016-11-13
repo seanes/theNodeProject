@@ -1,10 +1,8 @@
-'use strict';
-
-const express = require('express');
-const mongoose = require('mongoose');
-const Event = require('../model/Event.js');
+import express from 'express';
+import mongoose from 'mongoose';
+import Event from '../model/Event';
 const router = express.Router();
-const bodyParser = require("body-parser");
+import bodyParser from 'body-parser';
 
 router.route('/')
     .post((req, res) => {
@@ -27,12 +25,12 @@ router.route('/')
 
         event.save((err) => {
             if(err)
-                console.log("Oh shit, something happend");
-                
+                console.log("Oh shit, something bad happend");
+
             res.status(200).json(event);
         });
 
 
     });
 
-module.exports = router;
+export default router;
