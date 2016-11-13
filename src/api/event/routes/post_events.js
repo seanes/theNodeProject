@@ -7,8 +7,6 @@ import bodyParser from 'body-parser';
 router.route('/')
     .post((req, res) => {
 
-        console.log("req.body", req.body)
-
         let event = new Event({
             
             event_id: "65131",

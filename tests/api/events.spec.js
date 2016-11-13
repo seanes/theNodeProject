@@ -2,9 +2,11 @@ import chai from 'chai'
 import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
 const should =  chai.should();
-import Event from '../../src/api/event/model/Event'
-const endpointBase = '/api/events'
-import server from  '../../server'
+import Event from '../../src/api/event/model/Event';
+const endpointBase = '/api/events';
+import server from  '../../server';
+
+mongoose.Promise = Promise;
 
 chai.use(chaiHttp);
 
@@ -35,7 +37,7 @@ describe('Events', () => {
 
           const event = {
               event_name : 'test event',
-              description: "Et kurs for alle som er interessert i Node utvikling",
+              description: "Et kurs for alle som er interessert i Node-utvikling",
               image : "data:image/jpeg;base64,/9j/4QUmRXhpZgAASUkqABAAAAAAAAAAAAAAAAIADgE",
               capacity : 32,
               event_date : "Mon Nov 14 2016 17:00:00 GMT+0100",
@@ -44,7 +46,7 @@ describe('Events', () => {
               event_type: "workshop",
               event_location: "MELKEVEIEN, BG14",
               hosts:  ["Jørgen Brække", "Sean Scully"]
-          }
+          };
 
           chai.request(server)
               .post(endpointBase)

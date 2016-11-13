@@ -3,12 +3,12 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import config from "./config/config";
-
 import getEventsRouter from './src/api/event/routes/get_events';
 import postEventsrouter from './src/api/event/routes/post_events';
 
 const app = express();
 const port = process.env.PORT || 1337;
+mongoose.Promise = Promise;
 
 app.use(bodyParser.urlencoded({extended:true}));
 

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+mongoose.promise = Promise;
 
 const EventSchema = new Schema({
     event_name : { type: String, require: true},
