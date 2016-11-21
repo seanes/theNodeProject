@@ -1,20 +1,143 @@
 import mongoose from 'mongoose';
+import validate from 'mongoose-validator';
+
+
 const Schema = mongoose.Schema;
 mongoose.promise = Promise;
 
+const nameValidator = [
+    validate({
+        validator: 'isLength',
+        arguments: [3, 50],
+        message: 'should be between {ARGS[0]} and {ARGS[1]} characters'
+    })
+];
+
+const descValidator = [
+    validate({
+        validator: 'isLength',
+        arguments: [10, 350],
+        message: 'should be between {ARGS[0]} and {ARGS[1]} characters'
+    })
+];
+
+const isNumber = [
+    validate({
+        validator: 'isNumeric',
+        message: 'should be a number'
+    })
+];
+
+const isAfter = [
+     validate({
+        validator: 'isAfter',
+        arguments: new Date(),
+        message: 'should be a date before, ' + new Date()
+    })
+];
+
+const isEnum = [
+    validate({
+        validator: 'matches'
+    })
+];
+
+const hasHost = (value) => {
+    return Array.isArray(value) && value.length > 0
+}
+
+const isDate = [
+    validate({
+        validator: "isDate",
+        message: "should be a date"
+    })
+];
+
+
 const EventSchema = new Schema({
-    event_name : { type: String, require: true},
-    description : { type: String, require: true},
-    image : { type: String, require: false},
-    capacity : { type: Number, require: true},
-    event_date : { type: Date, require: true},
-    participation_deadline : { type: Date, require: true},
-    event_status : {type : String, enum: ['active', 'expired', 'cancelled'], require: true},
-    event_type : {type : String, enum: ["workshop","talk", "party"], require: true},
-    event_location : {type : String, require: true},
-    participants : {type : Array, default : []},
-    hosts : {type: Array, require: true},
-    attended_participants: { type: Array, default: []}
+    ref: {
+        type: String,
+        default: 0
+    },
+    event_name : { 
+        type: String, 
+        require: true, 
+        default:"", 
+        validate: nameValidator
+    },
+    description : { 
+        type: String, 
+        require: true, 
+        default:"", 
+        validate: descValidator
+    },
+    image : { 
+        type: String, 
+        require: false,
+        default: ""
+    },
+    capacity : { 
+        type: Number, 
+        require: true, 
+        default: "", 
+        validate: isNumber
+    },
+    event_date : { 
+        type: Date, 
+        require: true, 
+        default: "", 
+        validate: isAfter
+    },
+    participation_deadline : { 
+        type: Date, 
+        require: true,
+        default: "",
+        validate:isAfter
+    },
+    event_status : {
+        type : String, 
+        enum: ['active', 'expired', 'cancelled'], 
+        require: true,
+        default: "",
+        validate: isEnum
+    },
+    event_type : {
+        type : String, 
+        enum: ["workshop","talk", "party"], 
+        require: true,
+        default : "",
+        validate: isEnum
+    },
+    event_location : {
+        type : String, 
+        require: true,
+        validate: nameValidator
+    },
+    participants : {
+        type : Array, 
+        default : []
+    },
+    hosts : {
+        type: Array, 
+        require: true,
+        default : [],
+        validate : {
+            validator: hasHost,
+            message : 'needs one or more hosts'
+        }
+    },
+    attended_participants: { 
+        type: Array, 
+        default: []
+    },
+    created: {
+        type: Date,
+        default: new Date()
+    },
+    modified: {
+        type: Date,
+        default: new Date()
+    }
 });
 
 export default mongoose.model('Event', EventSchema);

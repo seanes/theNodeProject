@@ -13,7 +13,8 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "mongoose": "^4.6.7"
+    "mongoose": "^4.6.7",
+    "mongoose-validator": "^1.2.5"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

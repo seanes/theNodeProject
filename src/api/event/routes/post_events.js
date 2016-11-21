@@ -7,27 +7,42 @@ import bodyParser from 'body-parser';
 router.route('/')
     .post((req, res) => {
 
+
+        const makeID = ()=>{
+            let id = "";
+            const numb = "0123456789";
+            const abc = "abcdefghijklmnopqrstuvwxyz";
+
+            for( var i=0; i < 4; i++ )
+                id += numb.charAt(Math.floor(Math.random() * numb.length));
+
+            return id + abc.charAt(Math.floor(Math.random()* abc.length));
+        } 
+
         let event = new Event({
             
-            event_id: "65131",
+            ref : makeID(),
             event_name : req.body.event_name,
-            description: "Et kurs for alle som er interessert i Node utvikling",
-            image : "data:image/jpeg;base64,/9j/4QUmRXhpZgAASUkqABAAAAAAAAAAAAAAAAIADgE",
-            capacity : 32,
-            event_date : "Mon Nov 14 2016 17:00:00 GMT+0100",
-            participation_deadline: "Sun Nov 13 2016 14:13:47 GMT+0100",
-            event_status: "active",
-            event_type: "workshop",
-            event_location: "MELKEVEIEN, BG14",
+            description: req.body.description,
+            image : req.body.image,
+            capacity : req.body.capacity,
+            event_date : req.body.event_date,
+            participation_deadline: req.body.participation_deadline,
+            event_status: req.body.event_status,
+            event_type: req.body.event_type,
+            event_location: req.body.event_location,
             participants: [],
-            hosts:  ["Jørgen Brække", "Sean Scully"]
+            hosts:  req.body.hosts
         })
 
-        event.save((err) => {
-            if(err)
-                console.log("Oh shit, something bad happend");
 
-            res.status(200).json(event);
+        event.save((err) => {
+            if(err){
+                console.log("Oh shit, something bad happend");
+                res.status(400).json(err);
+            }
+            else
+                res.status(200).json(event);
         });
 
 
