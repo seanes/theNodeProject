@@ -11,10 +11,15 @@
   "author": "Jørgen Brække & Sean Scully",
   "license": "MIT",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
+    "connect-flash": "^0.1.1",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "mongoose": "^4.6.7",
-    "mongoose-validator": "^1.2.5"
+    "mongoose-validator": "^1.2.5",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
