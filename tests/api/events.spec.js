@@ -24,7 +24,7 @@ describe('Events', () => {
                 .get(endpointBase)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('object');
+                    res.body.should.be.a('array');
                     res.body.length.should.be.eql(0);
                     done();
                 });
@@ -40,8 +40,8 @@ describe('Events', () => {
               description: "Et kurs for alle som er interessert i Node-utvikling",
               image : "data:image/jpeg;base64,/9j/4QUmRXhpZgAASUkqABAAAAAAAAAAAAAAAAIADgE",
               capacity : 32,
-              event_date : "Mon Nov 14 2016 17:00:00 GMT+0100",
-              participation_deadline: "Sun Nov 13 2016 14:13:47 GMT+0100",
+              event_date : 1490851235792,
+              participation_deadline: 1490851235791,
               event_status: "active",
               event_type: "workshop",
               event_location: "MELKEVEIEN, BG14",
