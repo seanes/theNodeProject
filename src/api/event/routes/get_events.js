@@ -1,22 +1,28 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import Event from '../model/Event';
 const router = express.Router();
 
 router.route('/')
-    .get((req, res) => {
-        Event.find({}, (err, events) => {
-            if(err)
-                res.status(400).json(err);
-
-            res.status(200).json(events)
+    .get( (req, res) => {
+        Event.find({}, (err, docs, next) => {
+            if(err) {
+                next(err);
+            } else {
+                res.send(docs);
+            }
         });
     });
 
 router.route('/:id')
     .get((req, res) => {
-        const requestId = req.params.id;
-        res.send(requestId);
+        const { id } = req.params;
+        Event.findById(id, (err, doc) => {
+            if(err || !doc) {
+                res.status(404).send("Not found");
+            } else {
+                res.send(doc);
+            }
+        });
     });
 
 export default router;

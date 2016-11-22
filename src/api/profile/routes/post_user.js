@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import User from '../model/User';
+import User from '../../user/User';
 const router = express.Router();
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt-nodejs';

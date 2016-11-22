@@ -7,20 +7,19 @@ import bodyParser from 'body-parser';
 router.route('/')
     .post((req, res) => {
 
-
-        const makeID = ()=>{
+        const makeID = () => {
             let id = "";
             const numb = "0123456789";
             const abc = "abcdefghijklmnopqrstuvwxyz";
 
-            for( var i=0; i < 4; i++ )
+            for( var i=0; i < 4; i++ ) {
                 id += numb.charAt(Math.floor(Math.random() * numb.length));
+            }
 
             return id + abc.charAt(Math.floor(Math.random()* abc.length));
         } 
 
         let event = new Event({
-            
             ref : makeID(),
             event_name : req.body.event_name,
             description: req.body.description,
@@ -38,7 +37,7 @@ router.route('/')
 
         event.save((err) => {
             if(err){
-                console.log("Oh shit, something bad happend");
+                console.log("Oh shit, something bad happend", err);
                 res.status(400).json(err);
             }
             else

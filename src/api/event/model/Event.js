@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 
-
 const Schema = mongoose.Schema;
 mongoose.promise = Promise;
 
@@ -92,7 +91,7 @@ const EventSchema = new Schema({
         type: Date, 
         require: true,
         default: "",
-        validate:isAfter
+        validate: isAfter
     },
     event_status : {
         type : String, 
