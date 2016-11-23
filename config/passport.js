@@ -2,7 +2,7 @@ import passport from "passport"
 import {Strategy as LocalStrategy} from "passport-local";
 
 //load user model
-import User from "../src/api/profile/model/User";
+import User from "../src/api/user/model/User";
 
   // =========================================================================
     // LOCAL LOGIN =============================================================

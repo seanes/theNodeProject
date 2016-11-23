@@ -8,11 +8,9 @@ import flash from 'connect-flash';
 
 import config from './config/config';
 import passportConfig from './config/passport';
+import bootstrapping from './config/bootstrapping'
 
-import eventsGetRouter from './src/api/event/routes/get_events';
-import eventsPostRouter from './src/api/event/routes/post_events';
-import userPostRouter from './src/api/profile/routes/post_user';
-import validateUserRouter from './src/api/profile/routes/get_validate_user';
+import routes from './config/routes';
 
 const app = express();
 const port = process.env.PORT || 1337;
@@ -21,21 +19,22 @@ mongoose.Promise = Promise;
 app.use(bodyParser.urlencoded({extended: true}));
 
 // required for passport
+// session secret
 app.use(session({ 
         secret: 'js4life',
         resave: false,
         saveUninitialized: false
     })
-); // session secret
+);
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+//to be removed
+app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 
 //routes
-app.use('/api/events', eventsGetRouter);
-app.use('/api/events', eventsPostRouter);
-app.use('/api/user', userPostRouter);
-app.use('/api/validateUser', validateUserRouter);
+app.use(routes);
+
 
 //kickstart server
 app.listen(port, () => {

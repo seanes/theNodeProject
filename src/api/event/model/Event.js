@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
+import Counter from './Counter';
 
 const Schema = mongoose.Schema;
 mongoose.promise = Promise;
+
 
 const nameValidator = [
     validate({
@@ -27,13 +29,13 @@ const isNumber = [
     })
 ];
 
-const isAfter = [
+/*const isAfter = [
      validate({
         validator: 'isAfter',
-        arguments: new Date(),
-        message: 'should be a date before, ' + new Date()
+//        arguments: new Date().toString(),
+        message: 'should be a date before, ' + new Date().toString()
     })
-];
+];*/
 
 const isEnum = [
     validate({
@@ -45,6 +47,10 @@ const hasHost = (value) => {
     return Array.isArray(value) && value.length > 0
 }
 
+const isAfter = (value) => {
+    return new Date() < new Date(value);
+}
+
 const isDate = [
     validate({
         validator: "isDate",
@@ -54,9 +60,8 @@ const isDate = [
 
 
 const EventSchema = new Schema({
-    ref: {
-        type: String,
-        default: 0
+    user_code: {
+        type: String
     },
     event_name : { 
         type: String, 
@@ -70,13 +75,13 @@ const EventSchema = new Schema({
         default:"", 
         validate: descValidator
     },
-    image : { 
+    image : {
         type: String, 
         require: false,
         default: ""
     },
-    capacity : { 
-        type: Number, 
+    capacity : {
+        type: String, 
         require: true, 
         default: "", 
         validate: isNumber
@@ -84,14 +89,20 @@ const EventSchema = new Schema({
     event_date : { 
         type: Date, 
         require: true, 
-        default: "", 
-        validate: isAfter
+        default: "",
+        validate : {
+            validator : isAfter,
+            message : 'should be a date before, ' + new Date().toString()
+        }
     },
     participation_deadline : { 
         type: Date, 
         require: true,
         default: "",
-        validate: isAfter
+        validate : {
+            validator : isAfter,
+            message : 'should be a date before, ' + new Date().toString()
+        }
     },
     event_status : {
         type : String, 
@@ -138,5 +149,13 @@ const EventSchema = new Schema({
         default: new Date()
     }
 });
+
+/*EventSchema.pre('save', (next) => {
+    Counter.findByIdAndUpdate({_id: 'eventCounter'}, {$inc: { seq: 1} }, (error, counter) => {
+        if(error)
+            return next(error);
+        next();
+    });
+})*/
 
 export default mongoose.model('Event', EventSchema);

@@ -77,6 +77,11 @@ const UserSchema = new Schema({
         required : true,
         default : "",
         validate : hashValidation
+    },
+    created : {
+        type : Date,
+        required : true,
+        default : new Date()
     }
 });
 
