@@ -33,6 +33,14 @@ router.get('/login', (req, res) => {
     res.sendFile(path.dirname(process.mainModule.filename) + '/public/login.html');
 });
 
+router.get('/forgot', (req, res) => {
+    res.sendFile(path.dirname(process.mainModule.filename) + '/public/forgot.html');
+});
+
+router.get('/signup', (req, res) => {
+    res.sendFile(path.dirname(process.mainModule.filename) + '/public/signup.html');
+});
+
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/login');

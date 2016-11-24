@@ -33,7 +33,7 @@ router.route('/:id')
                         if(err)
                             res.status(400).json({message : "We fucked up, try again later", success : false})
                         else{
-                            res.status(200).json({message : "The account is validated, please log in width your mail " + user.email, success : true})
+                            res.status(200).json({message : "The account is validated, please log in with your mail " + user.email, success : true})
                         }
                     })
                 }

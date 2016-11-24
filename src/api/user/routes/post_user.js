@@ -12,20 +12,19 @@ import nodemailer from 'nodemailer';
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport('smtps://soprasteria.stand%40gmail.com:Drossap312@smtp.gmail.com');
 
+//create looong hash for one-time-use
+const makeHash = () => {
+    let id = "";
+    const abc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
+
+    for( var i=0; i < 50; i++ )
+        id += abc.charAt(Math.floor(Math.random() * abc.length));
+
+    return id;
+}
+
 router.route('/')
     .post((req, res) => {
-
-        //create looong hash for one-time-use
-        const makeHash = () => {
-            let id = "";
-            const abc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-            for( var i=0; i < 50; i++ )
-                id += abc.charAt(Math.floor(Math.random() * abc.length));
-
-            return id;
-        }
-
 
         let mail = req.body.email ? req.body.email.toLowerCase() : '';
 
@@ -50,9 +49,9 @@ router.route('/')
             }
             else{
 
-                let fullUrl = req.protocol + '://' + req.get('host');
+                const fullUrl = req.protocol + '://' + req.get('host');
 
-                let mailOptions = {
+                const mailOptions = {
                     from: '"Sopra Steria Events" <events@soprasteria.com>', // sender address
                     to: user.email, // list of receivers
                     subject: 'Vertify your account', // Subject line
@@ -83,5 +82,49 @@ router.route('/login')
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
+
+//send reset hash to a mail
+//todo: what to do with not activated accounts
+router.route('/forgot')
+    .post((req, res) => {
+        User.findOne({email: req.body.email}, (err, user, next) => {
+            if(err)
+                next(err);
+            if(!user)
+                res.status(200).json({message : "no user by this email"})
+            else{
+                user.resetPwToken = makeHash()
+                user.resetPwExpires = Date.now() + 3600000; // 1 hour
+
+                const promise = user.save();
+
+                promise.then((user) => {
+                    const fullUrl = req.protocol + '://' + req.get('host');
+                    
+                    const mailOptions = {
+                        from: '"Sopra Steria Events" <events@soprasteria.com>', // sender address
+                        to: user.email, // list of receivers
+                        subject: 'Reset your account', // Subject line
+                        text: "Hi, please reset your account on this url: " + fullUrl + '/api/forgot/' + user.resetPwToken + ' within an hour.', // plaintext body
+                    };
+                    transporter.sendMail(mailOptions, (err, info, next) => {
+                        if(err){
+                            next(err)
+                        }
+                        else{
+                            res.status(200).json({
+                                email : user.email,
+                                message : "check your mail"
+                            });
+                        }
+                    });
+                })
+
+            }
+        });
+    });
+
+
+//todo: validate reset hash and reset the password
 
 export default router;

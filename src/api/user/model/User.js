@@ -78,6 +78,14 @@ const UserSchema = new Schema({
         default : "",
         validate : hashValidation
     },
+    resetPwToken : {
+        type : String,
+        required : false,
+        default : ""
+    },
+    resetPwExpires : {
+        type : Date,
+    },
     created : {
         type : Date,
         required : true,

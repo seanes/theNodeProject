@@ -1,7 +1,12 @@
 'use strict'
 
+//check out the database
+// username: ssNorway
+// pw: Passord123
+
+
 const config = {
-    db : "mongodb://test:test@ds050539.mlab.com:50539/soprasteria",
+    db : "mongodb://test:test@ds040898.mlab.com:40898/soprasteria",
     dbOptions : {}
 };
 
