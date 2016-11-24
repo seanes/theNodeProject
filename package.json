@@ -6,7 +6,7 @@
   "scripts": {
     "start": "echo \"Error: no start implemented yet\" && exit 1",
     "dev": "nodemon --exec babel-node server.js",
-    "test": "mocha --compilers js:babel-core/register ./tests/*/*"
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register ./tests/*/*"
   },
   "author": "Jørgen Brække & Sean Scully",
   "license": "MIT",

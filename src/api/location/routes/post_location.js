@@ -7,20 +7,16 @@ import Location from '../model/Location';
 
 router.route('/')
     .post((req, res) => {
-        //save location
         let location = new Location({
             name : req.body.name,
             address : req.body.address,
             description: req.body.description,
             etg : req.body.etg,
-            lat : req.body.lat,
-            lng : req.body.lng
+            coordinates : req.body.coordinates,
         });
-
-        //save event
         location.save((err) => {
             if(err){
-                res.status(400).json(err);
+                res.status(500).json(err);
             }
             else
                 res.status(200).json(location);

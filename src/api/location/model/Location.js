@@ -38,16 +38,11 @@ const LocationSchema = new Schema({
         required : true,
         default : "",
     },
-    lat : {
-        type : String,
+    coordinates : {
+        type : [Number],
         required : true,
-        default : ""
+        default : []
     },
-    lng : {
-        type : String,
-        required : true,
-        default : ""
-    }
 });
 
 

@@ -1,15 +1,12 @@
 import express from 'express';
-import mongoose from 'mongoose';
-const router = express.Router();
-import bodyParser from 'body-parser';
-
 import Event from '../model/Event';
 import Counter from '../model/Counter'
 
+const router = express.Router();
 
 router.route('/')
     .post((req, res) => {
-        //find and update incrimental user_code
+        //find and update incremental user_code
         Counter.findByIdAndUpdate({_id: 'eventCounter'},  {$inc: { seq: 1} } , (err, inc, next) => {
             if(err)
                 next(err)
@@ -33,7 +30,7 @@ router.route('/')
             event.save((err) => {
                 if(err){
                     console.log("Oh shit, something bad happend");
-                    res.status(400).json(err);
+                    res.status(500).json(err);
                 }
                 else
                     res.status(200).json(event);

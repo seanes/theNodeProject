@@ -1,10 +1,11 @@
 import chai from 'chai'
 import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
-const should =  chai.should();
 import Event from '../../src/api/event/model/Event';
-const endpointBase = '/api/events';
 import server from  '../../server';
+
+const endpointBase = '/api/events';
+const should =  chai.should();
 
 mongoose.Promise = Promise;
 
