@@ -8,6 +8,9 @@
     "dev": "nodemon --exec babel-node server.js",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register ./tests/*/*"
   },
+  "pre-commit": [
+    "test"
+  ],
   "author": "Jørgen Brække & Sean Scully",
   "license": "MIT",
   "dependencies": {
@@ -28,6 +31,7 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "mocha": "^3.1.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "pre-commit": "^1.1.3"
   }
 }
