@@ -85,14 +85,16 @@ const UserSchema = new Schema({
     }
 });
 
+const user = this;
+
 // generating a hash
 UserSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 // checking if password is valid
-UserSchema.methods.validPassword = (password) => {
-    return bcrypt.compareSync(password, this.pw);
+UserSchema.methods.validPassword = (password, userPassword) => {
+    return bcrypt.compareSync(password, userPassword);
 }
 
 export default mongoose.model('User', UserSchema);

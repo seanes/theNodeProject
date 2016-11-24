@@ -8,6 +8,7 @@ import passport from 'passport';
 import passportConfig from "../../../../config/passport"
 import nodemailer from 'nodemailer';
 
+
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport('smtps://soprasteria.stand%40gmail.com:Drossap312@smtp.gmail.com');
 
@@ -76,35 +77,11 @@ router.route('/')
 
     });
 
-router.route('/login')
-    .post((req, res) => {
-        User.findOne({
-            email: req.body.email,
-            active: true
-        }, (err, user) => {
-            if(err)
-                res.status(400).json({
-                    message : "Darn, something happend. Try later",
-                    data : {},
-                    success : false
-                })
-            else{
-                passport.authenticate('local-login', (err,user, info) => {
-                     if (err) 
-                        res.status(400).json({message : "we fucked up, sorry"});
-                     if (user){
-                        res.logIn(user, (err) => {
-                            if(err)
-                                res.status(400).json({message : "we fucked up, sorry"});
-                            else
-                                res.status(200).json({message : "logged in!"})
-                        })
-                     }
-                     else
-                        res.status(200).json({message : "no user by this account"})
-                });
-            }
-        })
-    });
+router.route('/login')        
+    .post(passport.authenticate('local-login', {
+        successRedirect: '/api/events', // redirect to the secure profile section
+        failureRedirect: '/login', // redirect back to the signup page if there is an error
+        failureFlash: true // allow flash messages
+    }));
 
 export default router;
