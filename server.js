@@ -35,7 +35,6 @@ app.use(express.static(__dirname + '/public')); // set the static files location
 //routes
 app.use(routes);
 
-
 //kickstart server
 app.listen(port, () => {
 

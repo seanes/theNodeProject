@@ -14,12 +14,12 @@ router.route('/')
             etg : req.body.etg,
             coordinates : req.body.coordinates,
         });
-        location.save((err) => {
+        location.save((err, doc) => {
             if(err){
                 res.status(500).json(err);
             }
             else
-                res.status(200).json(location);
+                res.status(200).json(doc);
         });
     });
 

@@ -27,13 +27,13 @@ router.route('/')
             });
 
             //save event
-            event.save((err) => {
+            event.save((err, doc) => {
                 if(err){
                     console.log("Oh shit, something bad happend");
                     res.status(500).json(err);
                 }
                 else
-                    res.status(200).json(event);
+                    res.status(200).json(doc);
             });
         })
     });

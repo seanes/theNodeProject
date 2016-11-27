@@ -9,6 +9,14 @@ const should =  chai.should();
 
 mongoose.Promise = Promise;
 
+// example
+const mockLocation = {
+    name : 'Melkeveien',
+    address: 'Biskop Gunnerus gate 14, 0155 Oslo',
+    etg: 25,
+    coordinates: [59.911713, 10.753995]
+};
+
 chai.use(chaiHttp);
 
 describe('Locations', () => {
@@ -32,25 +40,34 @@ describe('Locations', () => {
         });
     });
 
+    describe('/GET location by id', () => {
+
+        new Location(mockLocation).save( (err, doc) => {
+            it('it should GET location by resource id', (done) => {
+                chai.request(server)
+                    .get(endpointBase + doc._id)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                        done();
+                    });
+            });
+        });
+    });
+
+
     describe('/POST locations', () => {
 
         it ('it should create a new location', (done) => {
 
-            const location = {
-                name : 'Melkeveien',
-                address: 'Biskop Gunnerus gate 14, 0155 Oslo',
-                etg: 25,
-                coordinates: [59.911713, 10.753995]
-            };
-
             chai.request(server)
                 .post(endpointBase)
                 .set('content-type', 'application/x-www-form-urlencoded')
-                .send(location)
+                .send(mockLocation)
                 .end( (err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    Object.keys(location).forEach( (key) => {
+                    Object.keys(mockLocation).forEach( (key) => {
                         res.body.should.have.property(key);
                     });
                     done();
