@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt-nodejs';
 import passport from 'passport';
 import passportConfig from "../../../../config/passport"
 import nodemailer from 'nodemailer';
-
+import path from 'path';
 
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport('smtps://soprasteria.stand%40gmail.com:Drossap312@smtp.gmail.com');
@@ -105,7 +105,7 @@ router.route('/forgot')
                         from: '"Sopra Steria Events" <events@soprasteria.com>', // sender address
                         to: user.email, // list of receivers
                         subject: 'Reset your account', // Subject line
-                        text: "Hi, please reset your account on this url: " + fullUrl + '/api/forgot/' + user.resetPwToken + ' within an hour.', // plaintext body
+                        text: "Hi, please reset your account on this url: " + fullUrl + '/api/user/forgot/' + user.resetPwToken + ' within an hour.', // plaintext body
                     };
                     transporter.sendMail(mailOptions, (err, info, next) => {
                         if(err){
@@ -124,7 +124,53 @@ router.route('/forgot')
         });
     });
 
+router.route('/forgot/:id')
+    .get((req, res) => {
+        const id = req.params.id;
+        User.findOne({resetPwToken : id, resetPwExpires: { $gt : Date.now() } }, (err, user, next) => {
+            if(err)
+                res.status(200).json(err)
+            if(!user)
+                res.status(200).json({message : "Token is invalid or has expired"})
+            else{
+                req.logIn(user, (err) => {
+                    if(err)
+                        next(err)
+                    else{
+                        res.sendFile(path.dirname(process.mainModule.filename) + '/public/reset.html');
+                    }
+                });
+            }
+        })
+    });
 
-//todo: validate reset hash and reset the password
+
+router.route('/reset')
+    .post((req, res) => {
+        const user = req.user;
+
+        user.pw = bcrypt.hashSync(req.body.pw, bcrypt.genSaltSync(8), null)
+
+        user.save().then((user) => {
+            const fullUrl = req.protocol + '://' + req.get('host');
+                    
+            const mailOptions = {
+                from: '"Sopra Steria Events" <events@soprasteria.com>', // sender address
+                to: user.email, // list of receivers
+                subject: 'Password is changed', // Subject line
+                text: "Your password has been changed on: " + fullUrl  , // plaintext body -
+            };
+            transporter.sendMail(mailOptions, (err, info, next) => {
+                if(err){
+                    next(err)
+                }
+                else{
+                    res.redirect(fullUrl + '/api/events')
+                }
+            });
+        })
+
+
+    });
 
 export default router;

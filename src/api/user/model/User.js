@@ -84,7 +84,7 @@ const UserSchema = new Schema({
         default : ""
     },
     resetPwExpires : {
-        type : Date,
+        type : String,
     },
     created : {
         type : Date,
