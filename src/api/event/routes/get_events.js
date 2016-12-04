@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.route('/')
     .get( (req, res) => {
-        Event.find({}, (err, docs, next) => {
+        Event.find({hidden: false}, (err, docs, next) => {
             if(err) {
                 next(err);
             } else {

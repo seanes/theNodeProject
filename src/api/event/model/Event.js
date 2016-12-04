@@ -147,6 +147,10 @@ const EventSchema = new Schema({
     modified: {
         type: Date,
         default: new Date()
+    },
+    hidden: {
+        type: Boolean,
+        default: false
     }
 });
 

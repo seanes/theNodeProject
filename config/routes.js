@@ -8,12 +8,21 @@ import validateUserRouter from '../src/api/user/routes/get_validate_user';
 import locationsGetRouter from '../src/api/location/routes/get_location';
 import locationsPostRouter from '../src/api/location/routes/post_location';
 
+import adminPostRouter from '../src/api/location/routes/post_admin';
+import adminGetRouter from '../src/api/location/routes/post_admin';
+
 const test = process.env.NODE_ENV === 'test'
 
 const router = express.Router();
 
 const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated() || test)
+        return next();
+    res.redirect('/');
+}
+
+const isLoggedInAndAdmin = (req, res, next) => {
+    if (req.isAuthenticated() && req.user.role === "admin" || test)
         return next();
     res.redirect('/');
 }
@@ -26,6 +35,10 @@ router.use('/api/events', isLoggedIn, eventsPostRouter);
 
 router.use('/api/locations', isLoggedIn, locationsGetRouter);
 router.use('/api/locations', isLoggedIn, locationsPostRouter);
+
+
+router.use('/api/admin', isLoggedInAndAdmin, adminPostRouter);
+router.use('/admin', isLoggedInAndAdmin, adminGetRouter);
 
 //to be deleted:
 router.get('/login', (req, res) => {
