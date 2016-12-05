@@ -1,6 +1,6 @@
 import express from 'express';
-import Event from '../../../event/model/Event';
-import User from '../../../user/model/User';
+import Event from '../../event/model/Event';
+import User from '../../user/model/User';
 const router = express.Router();
 
 router.route('/events/:id')
@@ -52,6 +52,27 @@ router.route('/user')
                     if(err){
                         console.log("Oh shit, something bad happend");
                         res.status(500).json(err);
+                    }
+                    else
+                        res.status(200).json(doc);
+                });
+            }
+        });
+    });
+
+router.route('/user/grantAdmin')
+    .post((req, res, next) => {;
+        User.findOne({email: req.body.email}, (err, user) => {
+            if(err || !doc) {
+                res.status(404).send("Not found");
+            } else {
+                
+                user.role =  "admin"
+                
+                //save user
+                user.save((err, doc) => {
+                    if(err){
+                        next(err)
                     }
                     else
                         res.status(200).json(doc);

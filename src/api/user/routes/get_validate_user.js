@@ -13,7 +13,7 @@ router.route('/')
 
 //validate hash
 router.route('/:id')
-    .get((req, res) => {
+    .get((req, res, next) => {
         User.findOne({
             'activationHash' : req.params.id,
             'active' : false
@@ -33,7 +33,14 @@ router.route('/:id')
                         if(err)
                             res.status(400).json({message : "We fucked up, try again later", success : false})
                         else{
-                            res.status(200).json({message : "The account is validated, please log in with your mail " + user.email, success : true})
+                            req.logIn(user, (err) => {
+                                if(err)
+                                    next(err)
+                                else{
+                                    res.redirect('/api/events');
+                                }
+                            })
+                            //res.status(200).json({message : "The account is validated, please log in with your mail " + user.email, success : true})
                         }
                     })
                 }

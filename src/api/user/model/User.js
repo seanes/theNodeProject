@@ -5,10 +5,10 @@ import bcrypt from 'bcrypt-nodejs';
 const Schema = mongoose.Schema;
 mongoose.promise = Promise;
 
-const nameValidator = [
+const pwValidator = [
     validate({
         validator: 'isLength',
-        arguments: [3, 250],
+        arguments: [4, 250],
         message: 'should be between {ARGS[0]} and {ARGS[1]} characters'
     })
 ];
@@ -41,12 +41,6 @@ const isEnum = [
 
 
 const UserSchema = new Schema({
-    name : {
-        type : String,
-        required : true,
-        default : "",
-        validate : nameValidator
-    },
     email : {
         type : String,
         required : true,
@@ -58,7 +52,7 @@ const UserSchema = new Schema({
         type : String,
         required : true,
         default : "",
-        validate : nameValidator 
+        validate : pwValidator 
     },
     role : {
         type : String,

@@ -1,6 +1,5 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import User from '../model/User';
 const router = express.Router();
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt-nodejs';
@@ -8,6 +7,10 @@ import passport from 'passport';
 import passportConfig from "../../../../config/passport"
 import nodemailer from 'nodemailer';
 import path from 'path';
+
+import User from '../model/User';
+import Profile from '../../profile/model/Profile';
+import Partner from '../../profile/model/Partner'
 
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport('smtps://soprasteria.stand%40gmail.com:Drossap312@smtp.gmail.com');
@@ -24,13 +27,12 @@ const makeHash = () => {
 }
 
 router.route('/')
-    .post((req, res) => {
+    .post((req, res, next) => {
 
         let mail = req.body.email ? req.body.email.toLowerCase() : '';
 
         //user obj to db
         let user = new User({
-            name : req.body.name,
             email : mail,
             role: "member",
             activationHash : makeHash(),
@@ -40,7 +42,7 @@ router.route('/')
         user.save((err) => {
             if(err){
                 if(err.code !== 11000)
-                    res.status(400).json(err);
+                    next(err)
                 else{
                     res.status(409).json({
                         message : req.body.email + " is already registered"
@@ -70,6 +72,39 @@ router.route('/')
                         });
                     }
                 });
+
+                //update profile with cv data
+                Partner.findOne({email : user.email}, (err, partner) => {
+                    if(err)
+                        next(err)
+                    if(partner){
+                        console.log("found cv!")
+                        
+                        const profile = new Profile({
+                            name : partner.name,
+                            description : partner.depatment,
+                            email : user.email
+                        });
+
+                        profile.save().then((profile) =>{
+                            console.log("profile saved")
+                        });
+                    }
+                    else{
+                        const profile = new Profile({
+                            email : user.email,
+                            event_history : [],
+                            profile_img : "",
+                            description : ""
+                        })
+
+                        profile.save().then((profile) =>{
+                            console.log("profile saved")
+                        });
+                    }
+                });
+
+
             }
         });
 
@@ -86,8 +121,8 @@ router.route('/login')
 //send reset hash to a mail
 //todo: what to do with not activated accounts
 router.route('/forgot')
-    .post((req, res) => {
-        User.findOne({email: req.body.email}, (err, user, next) => {
+    .post((req, res, next) => {
+        User.findOne({email: req.body.email}, (err, user) => {
             if(err)
                 next(err);
             if(!user)
@@ -107,7 +142,7 @@ router.route('/forgot')
                         subject: 'Reset your account', // Subject line
                         text: "Hi, please reset your account on this url: " + fullUrl + '/api/user/forgot/' + user.resetPwToken + ' within an hour.', // plaintext body
                     };
-                    transporter.sendMail(mailOptions, (err, info, next) => {
+                    transporter.sendMail(mailOptions, (err, info) => {
                         if(err){
                             next(err)
                         }
@@ -125,9 +160,9 @@ router.route('/forgot')
     });
 
 router.route('/forgot/:id')
-    .get((req, res) => {
+    .get((req, res, next) => {
         const id = req.params.id;
-        User.findOne({resetPwToken : id, resetPwExpires: { $gt : Date.now() } }, (err, user, next) => {
+        User.findOne({resetPwToken : id, resetPwExpires: { $gt : Date.now() } }, (err, user) => {
             if(err)
                 res.status(200).json(err)
             if(!user)
@@ -146,10 +181,11 @@ router.route('/forgot/:id')
 
 
 router.route('/reset')
-    .post((req, res) => {
+    .post((req, res, next) => {
         const user = req.user;
 
         user.pw = bcrypt.hashSync(req.body.pw, bcrypt.genSaltSync(8), null)
+        user.resetPwToken = "";
 
         user.save().then((user) => {
             const fullUrl = req.protocol + '://' + req.get('host');
@@ -160,7 +196,7 @@ router.route('/reset')
                 subject: 'Password is changed', // Subject line
                 text: "Your password has been changed on: " + fullUrl  , // plaintext body -
             };
-            transporter.sendMail(mailOptions, (err, info, next) => {
+            transporter.sendMail(mailOptions, (err, info) => {
                 if(err){
                     next(err)
                 }
@@ -169,8 +205,6 @@ router.route('/reset')
                 }
             });
         })
-
-
     });
 
 export default router;

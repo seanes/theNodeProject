@@ -8,10 +8,13 @@ import validateUserRouter from '../src/api/user/routes/get_validate_user';
 import locationsGetRouter from '../src/api/location/routes/get_location';
 import locationsPostRouter from '../src/api/location/routes/post_location';
 
-import adminPostRouter from '../src/api/location/routes/post_admin';
-import adminGetRouter from '../src/api/location/routes/post_admin';
+import profileGetRouter from '../src/api/profile/routes/get_profile';
+import profilePostRouter from '../src/api/profile/routes/get_profile';
 
-const test = process.env.NODE_ENV === 'test'
+import adminPostRouter from '../src/api/admin/routes/post_admin';
+import adminGetRouter from '../src/api/admin/routes/get_admin';
+
+const test = process.env.NODE_ENV === 'test';
 
 const router = express.Router();
 
@@ -36,6 +39,8 @@ router.use('/api/events', isLoggedIn, eventsPostRouter);
 router.use('/api/locations', isLoggedIn, locationsGetRouter);
 router.use('/api/locations', isLoggedIn, locationsPostRouter);
 
+router.use('/api/me', isLoggedIn, profileGetRouter);
+router.use('/api/me', isLoggedIn, profilePostRouter);
 
 router.use('/api/admin', isLoggedInAndAdmin, adminPostRouter);
 router.use('/admin', isLoggedInAndAdmin, adminGetRouter);

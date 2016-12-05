@@ -1,43 +1,46 @@
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 
-const karmaValidator = [
-    validate({
-        validator: 'isInt',
-        arguments: {min: 0, max : 3},
-        message: 'should be between 0 and 3 int'
-    })
-];
+const Schema = mongoose.Schema;
+mongoose.promise = Promise;
 
 const isArray = (value) => {
     return Array.isArray(value)
 }
 
-const isBinaryStr = [
+const isEmail = [
     validate({
-        validate : 'isBase64',
-        message : "should be a base64 string"
-    })
-]
-
-const descriptionValidator = [
+        validator: 'isEmail',
+        message: 'should be a mail'
+    }),
     validate({
-        validator: 'isLength',
-        arguments: [1, 1250],
-        message: 'should be between {ARGS[0]} and {ARGS[1]} characters'
+        validator : 'matches',
+        arguments : /^[A-Z0-9._%+-]+@soprasteria.com$/i,
+        messge : 'should be a soprasteria mail'
     })
 ];
 
 const ProfileSchema = new Schema({
+    email : {
+        type : String,
+        required : true,
+        unique : true,
+        validate : isEmail
+    },
+    name : {
+        type : String,
+        default : "",
+    },
     karma : {
         type : Number,
         required : true,
         default : 3,
-        validate : karmaValidator
+        min: 0,
+        max: 3
+        
     },
     event_history : {
         type : Array,
-        required : true,
         default : [],
         validate : {
             validator: isArray,
@@ -46,15 +49,15 @@ const ProfileSchema = new Schema({
     },
     profile_img : {
         type : String,
-        required : true,
         default : "",
-        validate : isBinaryStr 
     },
     description : {
         type : String,
-        required : true,
-        default : "",
-        validate : descriptionValidator
+        default : ""
+    },
+    created : {
+        type : Date,
+        default : Date.now()
     }
 });
 
