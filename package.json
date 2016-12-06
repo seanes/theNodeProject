@@ -6,7 +6,9 @@
   "scripts": {
     "start": "echo \"Error: no start implemented yet\" && exit 1",
     "dev": "nodemon --exec babel-node server.js",
-    "test": "NODE_ENV=test mocha --compilers js:babel-core/register ./tests/*/*"
+    "devW": "SET NODE_ENV=dev&& nodemon --exec babel-node server.js",
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register ./tests/*/*",
+    "testW": "SET NODE_ENV=test&& mocha --compilers js:babel-core/register ./tests/*/*"
   },
   "pre-commit": [
     "test"

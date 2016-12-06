@@ -14,7 +14,7 @@ router.route('/')
             if(err)
                 next(err)
             else{
-                res.send(200).json(profile);
+                res.status(200).json(profile);
             }
         })
     });

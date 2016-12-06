@@ -12,6 +12,8 @@ import User from '../model/User';
 import Profile from '../../profile/model/Profile';
 import Partner from '../../profile/model/Partner'
 
+const test = process.env.NODE_ENV === 'test';
+
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport('smtps://soprasteria.stand%40gmail.com:Drossap312@smtp.gmail.com');
 
@@ -53,33 +55,41 @@ router.route('/')
 
                 const fullUrl = req.protocol + '://' + req.get('host');
 
-                const mailOptions = {
-                    from: '"Sopra Steria Events" <events@soprasteria.com>', // sender address
-                    to: user.email, // list of receivers
-                    subject: 'Vertify your account', // Subject line
-                    text: "Hi, please vertify your account on this url: " + fullUrl + '/api/validateUser/' + user.activationHash, // plaintext body
-                    //html: htmlContent // html body
-                };
+                if(test){
+                    res.status(200).json({
+                        email : user.email,
+                        message : "user created, check your email to validate your account"
+                    });
+                }
+                else{
+                
+                    const mailOptions = {
+                        from: '"Sopra Steria Events" <events@soprasteria.com>', // sender address
+                        to: user.email, // list of receivers
+                        subject: 'Vertify your account', // Subject line
+                        text: "Hi, please vertify your account on this url: " + fullUrl + '/api/validateUser/' + user.activationHash, // plaintext body
+                        //html: htmlContent // html body
+                    };
 
-                transporter.sendMail(mailOptions, (err, info) => {
-                    if(err){
-                        res.status(400).json({message : "we fucked up, sorry"});
-                    }
-                    else{
-                        res.status(200).json({
-                            email : user.email,
-                            message : "user created, check your email to validate your account"
-                        });
-                    }
-                });
+                    transporter.sendMail(mailOptions, (err, info) => {
+                        if(err){
+                            res.status(400).json({message : "we fucked up, sorry"});
+                        }
+                        else{
+                            res.status(200).json({
+                                email : user.email,
+                                message : "user created, check your email to validate your account"
+                            });
+                        }
+                    });
+                }
+
 
                 //update profile with cv data
                 Partner.findOne({email : user.email}, (err, partner) => {
                     if(err)
                         next(err)
                     if(partner){
-                        console.log("found cv!")
-                        
                         const profile = new Profile({
                             name : partner.name,
                             description : partner.depatment,
@@ -87,7 +97,6 @@ router.route('/')
                         });
 
                         profile.save().then((profile) =>{
-                            console.log("profile saved")
                         });
                     }
                     else{

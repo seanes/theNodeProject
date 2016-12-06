@@ -4,9 +4,9 @@ import User from '../../user/model/User';
 const router = express.Router();
 
 router.route('/events/:id')
-    .post( (req, res) => {
+    .post( (req, res, next) => {
         const { id } = req.params;
-        Event.findOne({user_code : id}, (err, event, next) => {
+        Event.findOne({user_code : id}, (err, event) => {
             if(err) {
                 next(err);
             } else {
@@ -26,56 +26,55 @@ router.route('/events/:id')
                 }
 
                 //save event
-                event.save((err, doc) => {
+                event.save((err, user) => {
                     if(err){
                         console.log("Oh shit, something bad happend");
                         res.status(500).json(err);
                     }
                     else
-                        res.status(200).json(doc);
+                        res.status(200).json(user);
                 });
             }
         });
     });
 
 router.route('/user')
-    .post((req, res) => {;
+    .post((req, res, next) => {;
         User.findOne({email: req.body.email}, (err, user) => {
-            if(err || !doc) {
+            if(err || !user) {
                 res.status(404).send("Not found");
             } else {
                 
                 user.active =  req.body.active
                 
                 //save user
-                user.save((err, doc) => {
-                    if(err){
-                        console.log("Oh shit, something bad happend");
-                        res.status(500).json(err);
-                    }
+                user.save((err, user) => {
+                    if(err)
+                        next(err)
                     else
-                        res.status(200).json(doc);
+                        res.status(200).json(user);
                 });
             }
         });
     });
 
-router.route('/user/grantAdmin')
-    .post((req, res, next) => {;
+router.route('/user/grant-admin-access')
+    .post((req, res, next) => {
         User.findOne({email: req.body.email}, (err, user) => {
-            if(err || !doc) {
+            if(err || !user) {
                 res.status(404).send("Not found");
-            } else {
-                
-                user.role =  "admin"
+            } 
+            else { 
+                //role: member || admin
+                user.role =  req.body.role
                 
                 //save user
-                user.save((err, doc) => {
+                user.save((err, user) => {
                     if(err){
                         next(err)
                     }
                     else
-                        res.status(200).json(doc);
+                        res.status(200).json(user);
                 });
             }
         });
