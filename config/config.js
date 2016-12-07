@@ -1,12 +1,25 @@
 'use strict'
 
-//check out the database
+// check out the database
 // username: ssNorway
 // pw: Passord123
 
+let databasePath = '';
+
+const dbPath = () =>{
+    switch(process.env.NODE_ENV){
+        case "test": 
+            return "mongodb://test:test@ds052629.mlab.com:52629/soprasteria-test";
+        case "dev":
+            return "mongodb://test:test@ds052629.mlab.com:52629/soprasteria-dev";
+        default : 
+            return "mongodb://test:test@ds040898.mlab.com:40898/soprasteria";
+    }
+}
+
 
 const config = {
-    db : "mongodb://test:test@ds040898.mlab.com:40898/soprasteria",
+    db : dbPath(),
     dbOptions : {}
 };
 
