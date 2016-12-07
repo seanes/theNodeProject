@@ -12,46 +12,30 @@ mongoose.Promise = Promise;
 
 chai.use(chaiHttp);
 
-
 const mockUser = {
     email : "jorgen.braekke@soprasteria.com",
     pw : "jarjarBing1"
 };
 
-const mockUser2 = {
-    email : "jorgen.braekke@jabadahut.com",
-    pw : "jarjarBing1"
-};
-
-describe('User', () => {
+describe('Profile', () => {
 
     beforeEach((done) => {
-        done();
+         chai.request(server)
+            .post('/api/user')
+            .set('content-type', 'application/x-www-form-urlencoded')
+            .send(mockUser)
+            .end((err, res) => {
+                done();
+            });
     });
 
-    describe('/POST user', () => {
-        it('it should POST/CREATE a unvalidated user', (done) => {
+    describe('/GET profile', () => {
+        it('it should GET users profile', (done) => {
             chai.request(server)
-                .post('/api/user')
-                .set('content-type', 'application/x-www-form-urlencoded')
-                .send(mockUser)
+                .get(endpointBase)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property("message");
-                    done();
-                });
-        });
-    });
-
-    describe('/POST user', () => {
-        it('it should fail due to mail address', (done) => {
-            chai.request(server)
-                .post('/api/user')
-                .set('content-type', 'application/x-www-form-urlencoded')
-                .send(mockUser2)
-                .end((err, res) => {
-                    res.should.have.status(423);
+                    res.should.be.a('object');
                     done();
                 });
         });

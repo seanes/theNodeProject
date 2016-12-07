@@ -16,6 +16,7 @@
   "author": "Jørgen Brække & Sean Scully",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.1.4",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
