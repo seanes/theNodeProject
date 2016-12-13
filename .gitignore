@@ -5,4 +5,4 @@ node_modules
 # log
 npm-debug.log
 # build output
-public/**.js
+public/bundle.js
