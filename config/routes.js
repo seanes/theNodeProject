@@ -45,9 +45,8 @@ router.use('/api/me', isLoggedIn, profilePostRouter);
 router.use('/api/admin', isLoggedInAndAdmin, adminPostRouter);
 router.use('/admin', isLoggedInAndAdmin, adminGetRouter);
 
-//to be deleted:
 router.get('/login', (req, res) => {
-    res.sendFile(path.dirname(process.mainModule.filename) + '/public/login.html');
+    res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
 });
 
 router.get('/forgot', (req, res) => {
@@ -64,7 +63,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    res.redirect('/login')
+    // TODO : check for login credentials, redirect to /login if !userLoggedIn
 })
 
 export default router;

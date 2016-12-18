@@ -37,7 +37,8 @@ export default {
     entry: getEntries(),
     output: {
         path: __dirname + '/public',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     plugins: getPlugins(),
     module: {

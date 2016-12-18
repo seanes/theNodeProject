@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class App extends Component {
+export default class Home extends Component {
 
     render() {
         return (
             <div>
-                <h1>The Node Project</h1>
+                <p>Content ...</p>
             </div>
         )
     }

@@ -3,6 +3,7 @@ import React from 'react';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import * as reducers from '../reducers';
+import { routerReducer } from 'react-router-redux';
 
 const configureStore = () => {
 
@@ -23,7 +24,8 @@ const configureStore = () => {
     }
 
     const combinedReducer = combineReducers({
-        ...reducers
+        ...reducers,
+        routing: routerReducer
     });
 
     return createStore(combinedReducer, initialState, enchancer)

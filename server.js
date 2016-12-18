@@ -5,11 +5,9 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import session from 'express-session';
 import flash from 'connect-flash';
-
+import webpack from 'webpack'
 import config from './config/config';
-import passportConfig from './config/passport';
-import bootstrapping from './config/bootstrapping'
-
+import webpackConfig from './webpack.config'
 import routes from './config/routes';
 
 const app = express();
@@ -31,6 +29,16 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 //to be removed
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
+
+const compiler = new webpack(webpackConfig)
+
+if (process.env.NODE_ENV !== 'production') {
+    app.use(require("webpack-dev-middleware")(compiler, {
+        noInfo: true,stats: {colors: true},
+        publicPath: webpackConfig.output.publicPath,
+    }));
+    app.use(require("webpack-hot-middleware")(compiler));
+}
 
 //routes
 app.use(routes);

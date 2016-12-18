@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "echo \"Error: no start implemented yet\" && exit 1",
-    "dev": "nodemon --exec babel-node server.js",
+    "dev": "babel-node server.js",
     "devW": "SET NODE_ENV=dev&& nodemon --exec babel-node server.js",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register ./tests/*/*",
     "testW": "SET NODE_ENV=test&& mocha --compilers js:babel-core/register ./tests/*/*",
@@ -35,6 +35,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^15.4.1",
+    "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
