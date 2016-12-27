@@ -143,7 +143,7 @@ router.route('/')
 
 router.route('/login')        
     .post(passport.authenticate('local-login', {
-        successRedirect: '/api/events', // redirect to the secure profile section
+        successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
@@ -202,7 +202,7 @@ router.route('/forgot/:id')
                     if(err)
                         next(err)
                     else{
-                        res.sendFile(path.dirname(process.mainModule.filename) + '/public/reset.html');
+                        res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
                     }
                 });
             }

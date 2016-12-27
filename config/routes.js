@@ -21,13 +21,13 @@ const router = express.Router();
 const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated() || test)
         return next();
-    res.redirect('/');
+    res.status(403).send('Forbidden');
 }
 
 const isLoggedInAndAdmin = (req, res, next) => {
     if (req.isAuthenticated() && req.user.role === "admin" || test)
         return next();
-    res.redirect('/');
+    res.status(403).send('Forbidden');
 }
 
 router.use('/api/user', userPostRouter);
@@ -50,11 +50,11 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/forgot', (req, res) => {
-    res.sendFile(path.dirname(process.mainModule.filename) + '/public/forgot.html');
+    res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
 });
 
 router.get('/signup', (req, res) => {
-    res.sendFile(path.dirname(process.mainModule.filename) + '/public/signup.html');
+    res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
 });
 
 router.get('/logout', (req, res) => {
@@ -63,7 +63,11 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    // TODO : check for login credentials, redirect to /login if !userLoggedIn
+    if (!req.isAuthenticated()) {
+        res.redirect('/login')
+    } else {
+        res.next()
+    }
 })
 
 export default router;

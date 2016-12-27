@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { Route, IndexRoute, Router } from 'react-router';
 import App from './App';
-import Home from './Home';
 import Login from './Login';
+import SignUp from './SignUp';
+import Home from './Home';
+
+const isLoggedIn = false
 
 export default class Root extends Component {
 
@@ -16,7 +19,8 @@ export default class Root extends Component {
         const routes = (
             <Route path="/" component={App}>
                 <IndexRoute component={Home}/>
-                <Route path={'/login'} component={Login}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/signup" component={SignUp}/>
             </Route>
         )
 
