@@ -45,22 +45,23 @@ router.use('/api/me', isLoggedIn, profilePostRouter);
 router.use('/api/admin', isLoggedInAndAdmin, adminPostRouter);
 router.use('/admin', isLoggedInAndAdmin, adminGetRouter);
 
-router.get('/login', (req, res) => {
+router.get('/forgot', (req, res) => {
     res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
 });
 
-router.get('/forgot', (req, res) => {
-    res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
+router.get('/login', (req, res) => {
+  res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
 });
 
 router.get('/signup', (req, res) => {
     res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
 });
 
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/login');
+router.post('/logout', (req, res) => {
+  req.logout();
+  res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
 });
+
 
 router.get('/', (req, res) => {
     if (!req.isAuthenticated()) {

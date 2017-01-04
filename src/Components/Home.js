@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { EventsActions } from '../Actions/';
+import { EventsActions, RestActions } from '../Actions/';
 import { Link } from 'react-router';
-
+import { browserHistory } from 'react-router';
 
 class Home extends React.Component {
 
@@ -11,29 +11,44 @@ class Home extends React.Component {
     }
 
     componentWillMount() {
+        const { dispatch, isUserLoggedIn } = this.props;
+
+        if (isUserLoggedIn) {
+            dispatch(EventsActions.getEvents());
+        }
+    }
+
+    handleLogOut() {
         const { dispatch } = this.props;
-        dispatch(EventsActions.getEvents());
+        dispatch(RestActions.logout());
+        browserHistory.push('/login');
     }
 
     render() {
-        const { events } = this.props;
+        const { events, isUserLoggedIn } = this.props;
         return (
             <div>
-                <h3>Events</h3>
+                <h3>{isUserLoggedIn ? "Logged in" : "logged out"}</h3>
                 <ol>
                     { events && events.map( (event, i) => (
                         <li key={'event'+i}>{event.event_name}</li>
                     ))}
                 </ol>
-                <Link to="/login">Log in</Link>
+              {
+                  <isUserLoggedIn></isUserLoggedIn>
+                  ? <button onClick={() => this.handleLogOut()}>Log out</button>
+                  : <Link to="/login">Log in</Link>
+              }
             </div>
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
+    console.log("state", state)
     return {
-        events: state.eventsReducer.events
+        events: state.eventsReducer.events,
+        isUserLoggedIn: state.userReducer.isUserLoggedIn
     }
 }
 

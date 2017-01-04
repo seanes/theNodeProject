@@ -14,6 +14,7 @@ const app = express();
 const port = process.env.PORT || 1337;
 
 mongoose.Promise = Promise;
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // required for passport

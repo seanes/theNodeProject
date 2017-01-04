@@ -10,7 +10,6 @@ import path from 'path';
 
 //config
 const router = express.Router();
-import passportConfig from "../../../../config/passport"
 
 //models
 import User from '../model/User';
@@ -141,12 +140,45 @@ router.route('/')
     ])
     });
 
-router.route('/login')        
-    .post(passport.authenticate('local-login', {
-        successRedirect: '/', // redirect to the secure profile section
-        failureRedirect: '/login', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
-    }));
+router.route('/login')
+    .post( (req, res, next) => {
+
+        const { email, password } = req.body;
+
+        User.findOne({ email: email, active: true }, (err, user) => {
+
+            if (err) {
+                return next(new Error('No user'));
+            }
+
+            if (user && user.validPassword(password, user.pw)) {
+
+                passport.serializeUser(function(user, done) {
+                    done(null, user.id);
+                });
+
+                passport.deserializeUser(function(id, done) {
+                     User.findById(id, function(err, user) {
+                        done(err, user);
+                    });
+                });
+
+
+              req.logIn(user, (err) => {
+
+                    if (err) {
+                       return next(err);
+                    }
+
+                    res.status(200).json({message: 'OK'});
+                });
+            } else {
+                res.status(404).json({message : "no user by this email and password"});
+            }
+
+        });
+
+    });
 
 //send reset hash to a mail
 //todo: what to do with not activated accounts

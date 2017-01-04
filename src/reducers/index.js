@@ -1,2 +1,2 @@
-export exampleReducer from './exampleReducer';
+export userReducer from './userReducer';
 export eventsReducer from './eventsReducer';

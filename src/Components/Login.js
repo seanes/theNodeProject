@@ -1,14 +1,23 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { RestActions } from '../Actions/';
 
-export default class Login extends Component {
+class Login extends Component {
+
+    handleLogin(event) {
+      event.preventDefault();
+      const { dispatch } = this.props;
+      const { email, password } = this.refs;
+      dispatch(RestActions.login(email.value, password.value));
+    }
 
     render() {
         return (
             <div>
-                <form className="form" autoComplete="off" action="/api/user/login" method="post">
-                    <input type="email" className="form-control" name="email" placeholder="Username" />
-                    <input type="password" className="form-control" name="pw" placeholder="Password" />
+                <form className="form" autoComplete="off" onSubmit={(event) => this.handleLogin(event)}>
+                    <input ref="email" type="email" className="form-control" name="email" placeholder="Username" />
+                    <input ref="password" type="password" className="form-control" name="pw" placeholder="Password" />
                     <button type="submit" id="login-button">Login</button>
                 </form>
                 <Link to="/signup">Sign up</Link>
@@ -16,3 +25,17 @@ export default class Login extends Component {
         )
     }
 };
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    events: state.eventsReducer.events,
+  }
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    dispatch: dispatch
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
