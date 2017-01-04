@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import path from 'path';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -24,7 +25,6 @@ const getPlugins = () => {
     }));
 
     if (isProduction) {
-        plugins.push(new webpack.optimize.UglifyJsPlugin());
         plugins.push(new webpack.optimize.AggressiveMergingPlugin());
     } else {
         plugins.push(new webpack.optimize.OccurrenceOrderPlugin()),
@@ -33,25 +33,28 @@ const getPlugins = () => {
     return plugins;
 };
 
-export default {
+const configuration =  {
     entry: getEntries(),
     output: {
-        path: __dirname + '/public',
+        path: path.join(__dirname, '/public/'),
         filename: 'bundle.js',
-        publicPath: '/'
+        publicPath: '/public/'
     },
     plugins: getPlugins(),
     module: {
         loaders: [
             {
-                loader: 'babel-loader',
+                loaders: ['react-hot', 'babel'],
                 test: /\.js$/,
                 exclude: /node_modules/,
-                include: __dirname,
-                query: {
-                    presets: ['es2015', 'stage-0', 'react'],
-                },
+                include: path.join(__dirname, 'src'),
             },
         ]
     },
 };
+
+if (!isProduction) {
+    configuration.devtool = 'cheap-module-eval-source-map'
+}
+
+export default configuration;
