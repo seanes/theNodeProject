@@ -28,14 +28,13 @@ class Home extends React.Component {
         const { events, isUserLoggedIn } = this.props;
         return (
             <div>
-                <h3>{isUserLoggedIn ? "Logged in" : "logged out"}</h3>
+                <h3>{isUserLoggedIn ? "You are logged in" : "You are logged out"}</h3>
                 <ol>
                     { events && events.map( (event, i) => (
                         <li key={'event'+i}>{event.event_name}</li>
                     ))}
                 </ol>
-              {
-                  <isUserLoggedIn></isUserLoggedIn>
+              { isUserLoggedIn
                   ? <button onClick={() => this.handleLogOut()}>Log out</button>
                   : <Link to="/login">Log in</Link>
               }
@@ -45,7 +44,6 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log("state", state)
     return {
         events: state.eventsReducer.events,
         isUserLoggedIn: state.userReducer.isUserLoggedIn
