@@ -6,7 +6,7 @@
   "scripts": {
     "start": "echo \"Error: no start implemented yet\" && exit 1",
     "dev": "NODE_ENV=development node babel-server.js",
-    "devW": "SET NODE_ENV=dev&& node babel-server.js",
+    "devW": "SET NODE_ENV=development&& node babel-server.js",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register ./tests/*/*",
     "testW": "SET NODE_ENV=test&& mocha --compilers js:babel-core/register ./tests/*/*",
     "build": "NODE_ENV=production node -r babel-register node_modules/.bin/webpack --config=webpack.config.js",
