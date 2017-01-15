@@ -2,12 +2,16 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import React from 'react';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
-import * as reducers from '../reducers';
+import { userReducer, eventsReducer} from '../reducers';
 import { routerReducer } from 'react-router-redux';
 
 const configureStore = () => {
 
-    const initialState = {};
+    const initialState = {
+        user: {
+          isUserLoggedIn: window.userLoggedIn
+        }
+    };
     const loggerMiddleware = createLogger()
 
     const isProduction = process.env.NODE_ENV === 'production';
@@ -24,7 +28,8 @@ const configureStore = () => {
     }
 
     const combinedReducer = combineReducers({
-        ...reducers,
+        user: userReducer,
+        events: eventsReducer,
         routing: routerReducer
     });
 

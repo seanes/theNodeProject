@@ -25,12 +25,10 @@ RestActions.logout = () => {
 
 RestActions.login = (email, password) => {
   return function(dispatch) {
-
     const payLoad = {
       email: email,
       password: password
     };
-
     axios.post('/api/user/login', payLoad, {
       headers: { 'Content-Type': 'application/json' }
     })
@@ -42,7 +40,7 @@ RestActions.login = (email, password) => {
       console.log('error', response);
     })
   }
-}
+};
 
 export default RestActions;
 

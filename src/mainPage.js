@@ -13,7 +13,7 @@ const getMainPage  = (isLoggedIn) => {
         </body>
         </html>
         `
-  return page;
+    return page;
 };
 
 export default getMainPage;

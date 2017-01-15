@@ -45,8 +45,8 @@ class Home extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        events: state.eventsReducer.events,
-        isUserLoggedIn: state.userReducer.isUserLoggedIn
+        events: state.events.data,
+        isUserLoggedIn: state.user.isUserLoggedIn
     }
 }
 

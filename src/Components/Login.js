@@ -28,7 +28,7 @@ class Login extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    events: state.eventsReducer.events,
+    events: state.events.data,
   }
 };
 

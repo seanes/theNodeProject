@@ -5,8 +5,6 @@ import Login from './Login';
 import SignUp from './SignUp';
 import Home from './Home';
 
-const isLoggedIn = false
-
 export default class Root extends Component {
 
     static PropTypes = {

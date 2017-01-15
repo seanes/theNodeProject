@@ -1,8 +1,6 @@
 import * as types from '../Actions/types';
 
-const initialState = {
-    isUserLoggedIn: window.userLoggedIn
-};
+const initialState = { };
 
 export default (state = initialState, action) => {
     switch (action.type) {
