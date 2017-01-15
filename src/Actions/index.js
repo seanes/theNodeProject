@@ -1,2 +1,2 @@
 export EventsActions from './eventsActions';
-export RestActions from './restActions';
+export UserActions from './userActions';

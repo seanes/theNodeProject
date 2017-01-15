@@ -9,9 +9,9 @@ const receivedData = (type, data) => {
   }
 };
 
-var RestActions = {};
+var UserActions = {};
 
-RestActions.logout = () => {
+UserActions.logout = () => {
   return dispatch => {
     axios.post('logout')
     .then( response => {
@@ -23,7 +23,7 @@ RestActions.logout = () => {
   }
 };
 
-RestActions.login = (email, password) => {
+UserActions.login = (email, password) => {
   return dispatch => {
     const payLoad = {
       email: email,
@@ -42,7 +42,7 @@ RestActions.login = (email, password) => {
   }
 };
 
-RestActions.signUp = (email, password) => {
+UserActions.signUp = (email, password) => {
   return dispatch => {
     const payLoad = {
       email: email,
@@ -52,9 +52,7 @@ RestActions.signUp = (email, password) => {
       headers: { 'Content-Type': 'application/json' }
     })
     .then( response => {
-      console.log(response)
-      dispatch(receivedData(types.SUCCESS_USER_SIGNUP, null));
-      browserHistory.push('/login');
+      dispatch(receivedData(types.SUCCESS_USER_SIGNUP, response.message));
     })
     .catch( response => {
       dispatch(receivedData(types.ERROR_USER_SIGNUP, response.message));
@@ -62,6 +60,18 @@ RestActions.signUp = (email, password) => {
   }
 };
 
-export default RestActions;
+UserActions.getProfile = () => {
+  return dispatch => {
+    axios.get('/api/me')
+    .then( response => {
+      dispatch(receivedData(types.RECEIVED_USER_PROFILE, response.data))
+    })
+    .catch( response => {
+      console.log("error", response)
+    })
+  }
+}
+
+export default UserActions;
 
 

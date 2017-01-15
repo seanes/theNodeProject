@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { RestActions } from '../Actions/';
+import { UserActions } from '../Actions/';
 
 class Login extends Component {
 
@@ -9,7 +9,7 @@ class Login extends Component {
       event.preventDefault();
       const { dispatch } = this.props;
       const { email, password } = this.refs;
-      dispatch(RestActions.login(email.value, password.value));
+      dispatch(UserActions.login(email.value, password.value));
     }
 
     render() {

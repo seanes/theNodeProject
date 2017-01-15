@@ -59,7 +59,7 @@ router.route('/')
                         })
                     }
                     else{
-                        res.status(409).json({
+                        res.status(409).send({
                             message : req.body.email + " is already registered"
                         })
                     }

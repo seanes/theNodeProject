@@ -9,7 +9,11 @@ const configureStore = () => {
 
     const initialState = {
         user: {
-          isUserLoggedIn: window.userLoggedIn
+          isUserLoggedIn: window.userLoggedIn,
+          signup: {
+              error: false
+          },
+          profile: null
         }
     };
     const loggerMiddleware = createLogger()
