@@ -1,10 +1,6 @@
-'use strict'
-
 // check out the database
 // username: ssNorway
 // pw: Passord123
-
-let databasePath = '';
 
 const dbPath = () =>{
     switch(process.env.NODE_ENV){
@@ -17,10 +13,9 @@ const dbPath = () =>{
     }
 }
 
-
 const config = {
     db : dbPath(),
     dbOptions : {}
 };
 
-module.exports = config;
+export default config;
