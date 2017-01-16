@@ -53,6 +53,22 @@ router.get('/login', (req, res) => {
   res.send(getMainPage(req.isAuthenticated()))
 });
 
+router.get('/events', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login')
+  } else {
+    res.send(getMainPage(true))
+  }
+});
+
+router.get('/events/:id', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login')
+  } else {
+    res.send(getMainPage(true))
+  }
+});
+
 router.get('/signup', (req, res) => {
   res.send(getMainPage(req.isAuthenticated()))
 });
