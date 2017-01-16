@@ -16,6 +16,8 @@ export default class Root extends Component {
   render() {
     const { history } = this.props
 
+    // TODO:  add <Route path="*" component={NotFound}/> and NotFound component
+
     const routes = (
       <Route path="/" component={App}>
         <IndexRoute component={Home}/>
