@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { EventsActions, UserActions } from '../Actions/';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
-import NoUser from 'file!../static/no_user.png'
+import NoUser from 'file!../static/no_user.png';
+import { imageToBase64 } from '../utils/imageUtils';
 
 class Home extends React.Component {
 
@@ -26,6 +27,19 @@ class Home extends React.Component {
     browserHistory.push('/login');
   }
 
+  /* TODO: Implement this */
+  handleChangeProfileImg(event) {
+    const file = event.target.files[0];
+    imageToBase64(file, (response) => {
+      console.log(response)
+    });
+
+    /* TODO:
+      1. keep image as base64 string
+      2. create action to update user profile with new image
+     */
+  }
+
   render() {
     const { events, isUserLoggedIn, profile } = this.props;
     return (
@@ -36,6 +50,7 @@ class Home extends React.Component {
             <p>Name { profile.name }</p>
             <p>Karma {profile.karma}</p>
             <img style={{background: 'grey', width: 200, height: 200}} src={profile.profile_img || NoUser}/>
+            <input type="file" onChange={this.handleChangeProfileImg.bind(this)}/>
             </div>
           : null
         }

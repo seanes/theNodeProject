@@ -70,6 +70,10 @@ UserActions.getProfile = () => {
       console.log("error", response)
     })
   }
+};
+
+UserActions.updateProfileImg = () => {
+  // TODO : implement this
 }
 
 export default UserActions;
