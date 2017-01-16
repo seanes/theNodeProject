@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { EventsActions, UserActions } from '../Actions/';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
+import NoUser from 'file!../static/no_user.png'
 
 class Home extends React.Component {
 
@@ -34,6 +35,7 @@ class Home extends React.Component {
           ? <div>
             <p>Name { profile.name }</p>
             <p>Karma {profile.karma}</p>
+            <img style={{background: 'grey', width: 200, height: 200}} src={profile.profile_img || NoUser}/>
             </div>
           : null
         }
