@@ -41,7 +41,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { events, isUserLoggedIn, profile } = this.props;
+    const { isUserLoggedIn, profile } = this.props;
     return (
       <div>
         <h3>{isUserLoggedIn ? "You are logged in" : "You are logged out"}</h3>
@@ -55,7 +55,10 @@ class Home extends React.Component {
           : null
         }
         { isUserLoggedIn
-          ? <button onClick={() => this.handleLogOut()}>Log out</button>
+          ? <div>
+              <Link to="/events">View all events</Link>
+              <button style={{display: 'block', marginTop: 10}} onClick={() => this.handleLogOut()}>Log out</button>
+          </div>
           : <Link to="/login">Log in</Link>
         }
       </div>

@@ -9,7 +9,7 @@ const getMainPage  = (isLoggedIn) => {
         <body>
         <div id="root"></div>
         <script> window.userLoggedIn = ${isLoggedIn}</script>
-        <script src="public/bundle.js"></script>
+        <script src="/public/bundle.js"></script>
         </body>
         </html>
         `
