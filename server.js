@@ -9,6 +9,7 @@ import webpack from 'webpack'
 import config from './config/config';
 import webpackConfig from './webpack.config'
 import routes from './config/routes';
+import bootstrapping from './config/bootstrapping';
 
 const app = express();
 const port = process.env.PORT || 1337;
