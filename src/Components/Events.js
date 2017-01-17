@@ -7,7 +7,7 @@ class Events extends React.Component {
   componentWillMount() {
     const { events, dispatch } = this.props
     if (events || events.length) {
-       dispatch(EventsActions.getEvents())
+      dispatch(EventsActions.getEvents())
     }
   }
 

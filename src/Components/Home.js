@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { EventsActions, UserActions } from '../Actions/';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
-import NoUser from 'file!../static/no_user.png';
+import NoUser from 'file!../static/images/no_user.png';
 import { imageToBase64 } from '../utils/imageUtils';
 
 class Home extends React.Component {

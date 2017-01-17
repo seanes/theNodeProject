@@ -34,7 +34,7 @@ class SignUp extends React.Component {
         { signup.success
           ?
           <div style={messagestyle}>
-            <p style={{fontWeight: 600, color: '#03996e'}}>{signup.message || 'User created'}</p>
+            <p style={{fontWeight: 600, color: '#03996e'}}>{signup.message || 'User created, check yourself email'}</p>
           </div>
           : null
         }
