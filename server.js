@@ -52,6 +52,15 @@ app.listen(port, () => {
         }
         console.log(`Magic is happening on http://localhost:${port}`);
     });
-})
+});
+
+/* NB: This is considered bad practise because if something uncaught happens the state of the
+   server may have serious issues and should be restarted with fresh state.
+   Do not use this in production. For now, in very early alpha, this is useful for discovering the uncaught exceptions to later
+   handle these in the propper matter.
+*/
+process.on('uncaughtException', err => {
+  console.log(err);
+});
 
 export default app;
