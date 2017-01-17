@@ -14,7 +14,6 @@ router.route('/')
             if(err)
                 next(err)
             else{
-                console.log(profile)
                 res.status(200).json(profile);
             }
         })

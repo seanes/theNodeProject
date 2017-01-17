@@ -20,19 +20,45 @@ const mockUser = {
 describe('Profile', () => {
 
     beforeEach((done) => {
-         chai.request(server)
-            .post('/api/user')
-            .set('content-type', 'application/x-www-form-urlencoded')
-            .send(mockUser)
-            .end((err, res) => {
-                done();
-            });
+         
+         var profile = new Profile({
+             email : "jorgen.braekke@soprasteria.com",
+             describe : "",
+             profile_img : ''
+         });
+
+         profile.save((err, doc) => {
+             chai.request(server)
+                .post('/api/user')
+                .set('content-type', 'application/json')
+                .send(mockUser)
+                .end((err, res) => {
+                    done();
+                });
+         })
     });
 
     describe('/GET profile', () => {
         it('it should GET users profile', (done) => {
             chai.request(server)
                 .get(endpointBase)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.should.be.a('object');
+                    done();
+                });
+        });
+    });
+
+    describe('/POST profile', () => {
+        it('it should POST users profile', (done) => {
+            chai.request(server)
+                .post(endpointBase)
+                .set('content-type', 'application/json')
+                .send({
+                    description : 'jeg er awesome',
+                    img : 'test'
+                })
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.should.be.a('object');

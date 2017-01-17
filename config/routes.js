@@ -9,7 +9,7 @@ import locationsGetRouter from '../src/api/location/routes/get_location';
 import locationsPostRouter from '../src/api/location/routes/post_location';
 
 import profileGetRouter from '../src/api/profile/routes/get_profile';
-import profilePostRouter from '../src/api/profile/routes/get_profile';
+import profilePostRouter from '../src/api/profile/routes/post_profile';
 
 import adminPostRouter from '../src/api/admin/routes/post_admin';
 import adminGetRouter from '../src/api/admin/routes/get_admin';

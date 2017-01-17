@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import passport from 'passport';
 import User from '../model/User';
 const router = express.Router();
 
@@ -33,14 +34,24 @@ router.route('/:id')
                         if(err)
                             res.status(400).json({message : "We fucked up, try again later", success : false})
                         else{
+
+                            passport.serializeUser(function(user, done) {
+                                done(null, user.id);
+                            });
+
+                            passport.deserializeUser(function(id, done) {
+                                User.findById(id, function(err, user) {
+                                    done(err, user);
+                                });
+                            });
+
                             req.logIn(user, (err) => {
                                 if(err)
                                     next(err)
                                 else{
-                                    res.redirect('/api/events');
+                                    res.redirect('/');
                                 }
                             })
-                            //res.status(200).json({message : "The account is validated, please log in with your mail " + user.email, success : true})
                         }
                     })
                 }
