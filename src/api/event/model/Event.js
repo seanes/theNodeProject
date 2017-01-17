@@ -118,28 +118,10 @@ const EventSchema = new Schema({
         default : "",
         validate: isEnum
     },
-    event_location : {
-        type : String, 
-        require: true,
-        validate: nameValidator
-    },
-    participants : {
-        type : Array, 
-        default : []
-    },
-    hosts : {
-        type: Array, 
-        require: true,
-        default : [],
-        validate : {
-            validator: hasHost,
-            message : 'needs one or more hosts'
-        }
-    },
-    attended_participants: { 
-        type: Array, 
-        default: []
-    },
+    event_location : { type: Schema.Types.ObjectId, ref: 'Location' },
+    participants : [{ type: Schema.Types.ObjectId, ref: 'Profile' }],
+    hosts : [{ type: Schema.Types.ObjectId, ref: 'Profile' }],
+    attended_participants: [{ type: Schema.Types.ObjectId, ref: 'Profile' }],
     created: {
         type: Date,
         default: new Date()

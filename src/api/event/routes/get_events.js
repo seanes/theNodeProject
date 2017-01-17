@@ -4,7 +4,10 @@ const router = express.Router();
 
 router.route('/')
     .get( (req, res) => {
-        Event.find({hidden: false}, (err, docs, next) => {
+        Event.find({hidden: false})
+        .populate('event_location')
+        .populate('hosts')
+        .exec((err, docs) => {
             if(err) {
                 next(err);
             } else {
@@ -16,7 +19,9 @@ router.route('/')
 router.route('/:id')
     .get((req, res) => {
         const { id } = req.params;
-        Event.findById(id, (err, doc) => {
+        Event.findById(id)
+        .populate('event_location')
+        .populate('hosts').exec((err, doc) => {
             if(err || !doc) {
                 res.status(404).send("Not found");
             } else {
