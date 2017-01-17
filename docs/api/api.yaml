@@ -11,19 +11,13 @@ basePath: /v1
 produces:
   - application/json
 paths:
-  /profile/{id}:
+  /me:
     get:
       summary: Returns user profile
       description:
         Returns the profile of the user in session
       tags:
         - Profile
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: string
-          format: uuid
       responses:
         200:
           description: success
@@ -308,17 +302,17 @@ definitions:
       participants:
         type: array
         items:
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/Profile'
         description: List of registered participants
       attended_partcipants:
         type: array
         items:
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/Profile'
         description: List of participants who has attended
       hosts:
         type: array
         items:
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/Profile'
   Error:
     type: object
     properties:
