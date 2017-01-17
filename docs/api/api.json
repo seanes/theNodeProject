@@ -21,6 +21,9 @@
                 "tags": [
                     "Profile"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "responses": {
                     "200": {
                         "description": "success",
@@ -33,6 +36,27 @@
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
+                    }
+                }
+            },
+            "post": {
+                "description": "Do minimal changes to your user profile",
+                "tags": [
+                    "Profile"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Profile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
                     }
                 }
             }
