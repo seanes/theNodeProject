@@ -52,17 +52,21 @@ describe('Profile', () => {
 
     describe('/POST profile', () => {
         it('it should POST users profile', (done) => {
+            const description = 'jeg er awesome'
+            const profile_img = 'test'
             chai.request(server)
                 .post(endpointBase)
                 .set('content-type', 'application/json')
                 .send({
-                    description : 'jeg er awesome',
-                    img : 'test'
+                    description : description,
+                    profile_img : profile_img
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.should.be.a('object');
-                    done();
+                    res.body.should.be.a('object');
+                    res.body.description.should.equal(description);
+                    res.body.profile_img.should.equal(profile_img);
+                  done();
                 });
         });
     });

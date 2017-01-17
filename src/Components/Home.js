@@ -50,6 +50,7 @@ class Home extends React.Component {
             <p>Name { profile.name }</p>
             <p>Karma {profile.karma}</p>
             <img style={{background: 'grey', width: 200, height: 200}} src={profile.profile_img || NoUser}/>
+            <p>My previous attended events: { profile.event_history.length }</p>
             <input type="file" onChange={this.handleChangeProfileImg.bind(this)}/>
             </div>
           : null

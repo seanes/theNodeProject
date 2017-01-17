@@ -1,7 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { EventsActions } from '../Actions/';
 
 class Events extends React.Component {
+
+  componentWillMount() {
+    const { events, dispatch } = this.props
+    if (events || events.length) {
+       dispatch(EventsActions.getEvents())
+    }
+  }
 
   // TODO: fetch events and display them
 
