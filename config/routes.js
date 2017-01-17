@@ -1,5 +1,5 @@
 import express from 'express';
-import path from 'path';
+import getMainPage from '../src/mainPage'
 
 import eventsGetRouter from '../src/api/event/routes/get_events';
 import eventsPostRouter from '../src/api/event/routes/post_events';
@@ -46,28 +46,43 @@ router.use('/api/admin', isLoggedInAndAdmin, adminPostRouter);
 router.use('/admin', isLoggedInAndAdmin, adminGetRouter);
 
 router.get('/forgot', (req, res) => {
-    res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
+    res.send(getMainPage(req.isAuthenticated()))
 });
 
 router.get('/login', (req, res) => {
-  res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
+  res.send(getMainPage(req.isAuthenticated()))
+});
+
+router.get('/events', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login')
+  } else {
+    res.send(getMainPage(true))
+  }
+});
+
+router.get('/events/:id', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login')
+  } else {
+    res.send(getMainPage(true))
+  }
 });
 
 router.get('/signup', (req, res) => {
-    res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
+  res.send(getMainPage(req.isAuthenticated()))
 });
 
 router.post('/logout', (req, res) => {
   req.logout();
-  res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
+  res.send(getMainPage(req.isAuthenticated()))
 });
-
 
 router.get('/', (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/login')
     } else {
-        res.next()
+      res.send(getMainPage(true))
     }
 })
 

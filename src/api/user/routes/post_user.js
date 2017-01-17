@@ -15,6 +15,7 @@ const router = express.Router();
 import User from '../model/User';
 import Profile from '../../profile/model/Profile';
 import Partner from '../../profile/model/Partner'
+import getMainPage from '../../../mainPage'
 
 const test = process.env.NODE_ENV === 'test';
 
@@ -58,7 +59,7 @@ router.route('/')
                         })
                     }
                     else{
-                        res.status(409).json({
+                        res.status(409).send({
                             message : req.body.email + " is already registered"
                         })
                     }
@@ -234,7 +235,7 @@ router.route('/forgot/:id')
                     if(err)
                         next(err)
                     else{
-                        res.sendFile(path.dirname(process.mainModule.filename) + '/public/index.html');
+                        res.send(getMainPage(req.isAuthenticated()));
                     }
                 });
             }

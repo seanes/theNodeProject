@@ -1,3 +1,6 @@
 /* user actions */
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
+export const ERROR_USER_SIGNUP = 'ERROR_USER_SIGNUP';
+export const SUCCESS_USER_SIGNUP = 'SUCCESS_USER_SIGNUP';
+export const RECEIVED_USER_PROFILE = 'RECEIVED_USER_PROFILE';

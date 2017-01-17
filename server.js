@@ -46,7 +46,6 @@ app.use(routes);
 
 //kickstart server
 app.listen(port, () => {
-
     mongoose.connect(config.db, config.dbOptions, (err) =>{
         if(err){
             console.log(err);
