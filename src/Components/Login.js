@@ -7,8 +7,8 @@ class Login extends Component {
 
   handleLogin(event) {
     event.preventDefault();
-    const { dispatch } = this.props;
     const { email, password } = this.refs;
+    const { dispatch } = this.props;
     dispatch(UserActions.login(email.value, password.value));
   }
 
@@ -26,13 +26,13 @@ class Login extends Component {
   }
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     events: state.events.data,
   }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     dispatch: dispatch
   }

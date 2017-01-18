@@ -5,9 +5,9 @@ import { EventsActions } from '../Actions/';
 class Events extends React.Component {
 
   componentWillMount() {
-    const { events, dispatch } = this.props
-    if (events || events.length) {
-      dispatch(EventsActions.getEvents())
+    const { events, getEvents } = this.props
+    if (!events || !events.length) {
+      getEvents();
     }
   }
 
@@ -31,7 +31,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    dispatch: dispatch
+    getEvents: () => dispatch(EventsActions.getEvents())
   }
 }
 

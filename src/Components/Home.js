@@ -8,22 +8,18 @@ import { imageToBase64 } from '../utils/imageUtils';
 
 class Home extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
-    const { dispatch, isUserLoggedIn } = this.props;
+    const { isUserLoggedIn, getEvents, getProfile } = this.props;
 
     if (isUserLoggedIn) {
-      dispatch(EventsActions.getEvents());
-      dispatch(UserActions.getProfile());
+      getEvents();
+      getProfile();
     }
   }
 
   handleLogOut() {
-    const { dispatch } = this.props;
-    dispatch(UserActions.logout());
+    const { logOut } = this.props;
+    logOut();
     browserHistory.push('/login');
   }
 
@@ -67,7 +63,7 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     events: state.events.data,
     isUserLoggedIn: state.user.isUserLoggedIn,
@@ -75,9 +71,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
-    dispatch: dispatch
+    getEvents: () => dispatch(EventsActions.getEvents()),
+    logOut: () => dispatch(UserActions.logout()),
+    getProfile: () => dispatch(UserActions.getProfile())
   }
 }
 
