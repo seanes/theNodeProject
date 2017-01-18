@@ -10,7 +10,7 @@ Try the live demo of the API [here](http://petstore.swagger.io/?url=https://raw.
 
 #### a. React
 * Create a Footer component in the Home component. This component could e.g. contain information about current version (be creative here!), link to GitHub repository and with a tiny cry for help. It is also very useful to display the year (don't cheat!)
-* Resume the work of the lazer programmers in the Events component. It would be very useful to list all relevant information of the events. But not too verbose. Oh, and wouldn't it be great with a link (NB: use `Link` with the props `to=""` and not your regular `<a href=""..."` so that React-Router is happy) to the event with more information? The lazy programmers agree.
+* Resume the work of the lazy programmers in the Events component. It would be very useful to list all relevant information of the events. But not too verbose. Oh, and wouldn't it be great with a link (NB: use `Link` with the props `to=""` and not your regular `<a href=""..."` so that React-Router is happy) to the event with more information? The lazy programmers agree.
 * You have gotten so far, React ninja! The very last but not least "pure" React exercise is vital for the participants to have a closer look on each event. Remember you made the Events component link to an event? Well, now pass the event down to the Event component and make it look important and shiny. Useful information about the event would be nice, but be creative and let it be useful.
 
 #### b. Redux
