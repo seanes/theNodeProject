@@ -37,7 +37,7 @@
     "image-webpack-loader": "^3.1.0",
     "mongoose": "^4.7.6",
     "mongoose-validator": "^1.2.5",
-    "nodemailer": "^2.7.0",
+    "nodemailer": "^2.7.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^15.4.2",
