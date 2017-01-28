@@ -23,17 +23,12 @@ class Home extends React.Component {
     browserHistory.push('/login');
   }
 
-  /* TODO: Implement this */
   handleChangeProfileImg(event) {
     const file = event.target.files[0];
     imageToBase64(file, (response) => {
       console.log(response)
     });
 
-    /* TODO:
-      1. keep image as base64 string
-      2. create action to update user profile with new image
-     */
   }
 
   render() {

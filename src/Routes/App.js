@@ -7,7 +7,6 @@ class App extends Component {
   }
 
   render() {
-    // TODO : implement header and footer
     const { children } = this.props
     return (
       <div>

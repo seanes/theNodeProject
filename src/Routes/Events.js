@@ -11,8 +11,6 @@ class Events extends React.Component {
     }
   }
 
-  // TODO: fetch events and display them
-
   render() {
     const { events } = this.props
     return (
