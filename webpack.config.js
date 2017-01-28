@@ -58,6 +58,12 @@ const configuration =  {
         exclude: /node_modules/,
         include: path.join(__dirname, 'static'),
       },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        include: __dirname,
+        loaders: ['style', 'css', 'sass']
+      },
     ]
   },
 };
