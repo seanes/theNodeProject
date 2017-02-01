@@ -10,10 +10,13 @@ import SignUp from './Routes/SignUp';
 import Home from './Routes/Home';
 import Events from './Routes/Events';
 import Event from './Routes/Event';
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 import './styles/core.scss'
+
+injectTapEventPlugin();
 
 render(
     <Provider store={store}>
