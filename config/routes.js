@@ -73,6 +73,14 @@ router.get('/signup', (req, res) => {
   res.send(getMainPage(req.isAuthenticated()))
 });
 
+router.get('/profile', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login')
+  } else {
+    res.send(getMainPage(true))
+  }
+});
+
 router.post('/logout', (req, res) => {
   req.logout();
   res.send(getMainPage(req.isAuthenticated()))

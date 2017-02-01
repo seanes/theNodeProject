@@ -1,5 +1,10 @@
 @import '~normalize.css/normalize';
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab|Open+Sans:400italic,700italic,400,700);
+@import "./variables";
+@import './components/footer';
+@import './components/header';
+@import './components/profile';
+
 
 $roboto-slab: 'Roboto Slab', serif;
 $open-sans: 'Open Sans', sans-serif;
@@ -13,11 +18,15 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
 }
 
 *,
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+.app {
+  width: 95%;
+  margin: auto;
 }

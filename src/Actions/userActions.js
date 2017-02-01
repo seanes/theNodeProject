@@ -16,12 +16,29 @@ UserActions.logout = () => {
     axios.post('logout')
     .then(response => {
       dispatch(receivedData(types.USER_LOGGED_OUT, null));
+      browserHistory.push('/login');
     })
     .catch(response => {
       console.log('error', response);
     })
   }
 };
+
+UserActions.updateProfile = payLoad => {
+
+  return dispatch => {
+
+    axios.post('/api/me', payLoad, {
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(response => {
+      dispatch(UserActions.getProfile())
+    })
+    .catch(response => {
+      console.log('error', response);
+    })
+  }
+}
 
 UserActions.login = (email, password) => {
   return dispatch => {
@@ -34,6 +51,7 @@ UserActions.login = (email, password) => {
     })
     .then(response => {
       dispatch(receivedData(types.USER_LOGGED_IN, null));
+      dispatch(UserActions.getProfile())
       browserHistory.push('/');
     })
     .catch(response => {

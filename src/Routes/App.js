@@ -1,24 +1,65 @@
-import React, { Component, PropTypes } from 'react';
-import {
-  MuiThemeProvider,
-} from 'material-ui';
+import React, { PropTypes } from 'react';
+import { MuiThemeProvider } from 'material-ui';
+import Footer from '../Components/Footer';
+import Header from '../Components/Header';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { connect } from 'react-redux';
+import { EventsActions, UserActions } from '../Actions/';
 
-class App extends Component {
+class App extends React.Component {
 
   static PropTypes = {
     children: PropTypes.element.isRequired
   }
 
+  componentWillMount() {
+    const { isUserLoggedIn, getEvents, getProfile } = this.props;
+
+    if (isUserLoggedIn) {
+      getEvents();
+      getProfile();
+    }
+  }
+
+
   render() {
-    const { children } = this.props
+
+    const muiTheme = getMuiTheme({
+      palette: {
+        primary1Color: '#1A75BC',
+        primary2Color: '#1A75BC',
+        primary3Color: '#1A75BC',
+      },
+    }, {});
+
+    const { children, isUserLoggedIn, profile, dispatch } = this.props
+
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          { children }
+          <Header isUserLoggedIn={isUserLoggedIn} profile={profile} dispatch={dispatch} />
+          <div className="app">{ children }</div>
+          <Footer/>
         </div>
       </MuiThemeProvider>
     )
   }
 };
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isUserLoggedIn: state.user.isUserLoggedIn,
+    profile: state.user.profile
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getEvents: () => dispatch(EventsActions.getEvents()),
+    logOut: () => dispatch(UserActions.logout()),
+    getProfile: () => dispatch(UserActions.getProfile()),
+    dispatch: dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

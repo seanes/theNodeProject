@@ -1,0 +1,20 @@
+.header {
+  font-size: 2em;
+  background-color: $blue;
+  height: 64px;
+  display: flex;
+  align-items: center;
+
+  .title {
+    color: #fff;
+    padding: 10px;
+  }
+
+  img.profile {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+
+}
+

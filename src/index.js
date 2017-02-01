@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { Route, IndexRoute, Router, browserHistory } from 'react-router';
 import App from './Routes/App';
 import Login from './Routes/Login';
+import Profile from "./Routes/Profile";
 import SignUp from './Routes/SignUp';
 import Home from './Routes/Home';
 import Events from './Routes/Events';
@@ -27,6 +28,7 @@ render(
           <Route path="signup" component={SignUp}/>
           <Route path="events" component={Events}/>
           <Route path="/events/:eventId" component={Event}/>
+          <Route path="/profile" component={Profile}/>
         </Route>
       </Router>
     </Provider>,
