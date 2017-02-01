@@ -55,6 +55,10 @@ const ProfileSchema = new Schema({
         type : String,
         default : ""
     },
+    modified : {
+        type : Date,
+        default : Date.now()
+    },
     created : {
         type : Date,
         default : Date.now()

@@ -12,8 +12,10 @@ router.route('/')
     if(err)
       next(err);
 
-    profile.description = req.body.description ? req.body.description : '';
-    profile.profile_img = req.body.profile_img ? req.body.profile_img : '';
+    profile.description = req.body.description ? req.body.description : profile.description;
+    profile.profile_img = req.body.profile_img ? req.body.profile_img : profile.profile_img;
+    profile.name = req.body.name ? req.body.name : profile.name;
+    profile.modified = new Date()
 
     profile.save((err, doc) =>{
       if(err)
