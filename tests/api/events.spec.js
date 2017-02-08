@@ -24,6 +24,7 @@ const mockedEvent = {
     event_status: "active",
     event_type: "workshop",
     event_location: "",
+    duration_hours: 3,
     hosts:  []
 };
 

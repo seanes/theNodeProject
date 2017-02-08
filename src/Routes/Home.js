@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import { Link } from 'react-router';
 
 class Home extends React.Component {
 
   render() {
     return (
       <div>
-        Home
+        <Link to="/events/new/">+ Create event</Link>
       </div>
     )
   }

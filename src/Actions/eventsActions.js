@@ -21,4 +21,16 @@ EventsActions.getEvents = () => {
   }
 }
 
+EventsActions.getLocations = () => {
+  return function (dispatch) {
+    axios.get('/api/locations')
+    .then( (response) => {
+      dispatch(receivedData('RECEIVED_LOCATIONS', response.data))
+    })
+    .catch( (response) => {
+      // do something here
+    })
+  }
+}
+
 export default EventsActions;

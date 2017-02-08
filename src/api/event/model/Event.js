@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
-import Counter from './Counter';
 
 const Schema = mongoose.Schema;
 mongoose.promise = Promise;
@@ -29,23 +28,11 @@ const isNumber = [
     })
 ];
 
-/*const isAfter = [
-     validate({
-        validator: 'isAfter',
-//        arguments: new Date().toString(),
-        message: 'should be a date before, ' + new Date().toString()
-    })
-];*/
-
 const isEnum = [
     validate({
         validator: 'matches'
     })
 ];
-
-const hasHost = (value) => {
-    return Array.isArray(value) && value.length > 0
-}
 
 const isAfter = (value) => {
     return new Date() < new Date(value);
@@ -74,6 +61,12 @@ const EventSchema = new Schema({
         require: true, 
         default:"", 
         validate: descValidator
+    },
+    duration_hours : {
+      type: Number,
+      required: true,
+      default: 2,
+      validate: isNumber
     },
     image : {
         type: String, 
