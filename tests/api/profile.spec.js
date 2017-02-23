@@ -36,6 +36,7 @@ describe('Profile', () => {
                     done();
                 });
          })
+
     });
 
     describe('/GET profile', () => {

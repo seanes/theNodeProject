@@ -91,10 +91,6 @@ UserActions.getProfile = () => {
   }
 };
 
-UserActions.updateProfileImg = () => {
-  // TODO : implement this
-}
-
 export default UserActions;
 
 

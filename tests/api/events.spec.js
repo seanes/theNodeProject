@@ -2,8 +2,6 @@ import chai from 'chai'
 import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
 import Event from '../../src/api/event/model/Event';
-
-import Profile from '../../src/api/profile/model/Profile';
 import Location from '../../src/api/location/model/Location';
 
 import server from  '../../server';

@@ -19,7 +19,7 @@ router.route('/')
                 capacity : req.body.capacity,
                 event_date : req.body.event_date,
                 participation_deadline: req.body.participation_deadline,
-                event_status: req.body.event_status,
+                event_status: req.body.event_status || 'active',
                 event_type: req.body.event_type,
                 event_location: req.body.event_location,
                 participants: [],

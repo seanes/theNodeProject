@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import NewEventForm from '../Components/NewEventForm'
+import EventForm from '../Components/EventForm'
 import { EventsActions } from '../Actions/'
 
 class NewEvent extends React.Component {
@@ -9,21 +9,21 @@ class NewEvent extends React.Component {
     this.props.dispatch(EventsActions.getLocations());
   }
 
-  handleCreateEvent(e, newEvent) {
+  handleCreateEvent(e, event) {
     e.preventDefault();
-    //this.props.dispatch(EventsActions.createEvent())
+    this.props.dispatch(EventsActions.createEvent(event))
   }
 
   render() {
 
     const { locations } = this.props
-    const eventTypes = ['Workshop', 'Party', 'Lecture', 'Kick-off', 'Get-together'];
+    const eventTypes = ['Talk', 'Workshop', 'Party'];
 
     return (
       <div>
         <p>You are now creating a new event</p>
         { locations
-          ? <NewEventForm
+          ? <EventForm
               eventTypes={eventTypes}
               locations={locations}
               handleCreateEvent={this.handleCreateEvent.bind(this)}

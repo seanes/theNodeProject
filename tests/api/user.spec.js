@@ -4,14 +4,11 @@ import mongoose from 'mongoose';
 import Profile from '../../src/api/profile/model/Profile';
 import User from '../../src/api/user/model/User';
 import server from  '../../server';
-
-const endpointBase = '/api/me';
 const should =  chai.should();
 
 mongoose.Promise = Promise;
 
 chai.use(chaiHttp);
-
 
 const mockUser = {
     email : "jorgen.braekke@soprasteria.com",
@@ -24,10 +21,6 @@ const mockUser2 = {
 };
 
 describe('User', () => {
-
-    beforeEach((done) => {
-        done();
-    });
 
     describe('/POST user', () => {
         it('it should POST/CREATE a unvalidated user', (done) => {

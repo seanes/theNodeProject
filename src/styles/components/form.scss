@@ -1,0 +1,11 @@
+.event-form {
+  display: flex;
+  flex-direction: column;
+
+  > * {
+    text-align: center;
+    width: 50%;
+    margin: 10px auto;
+  }
+
+}
