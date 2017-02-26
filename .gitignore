@@ -7,3 +7,6 @@ npm-debug.log
 # build output
 public/bundle.js
 .DS_Store
+bin/
+reports/
+selenium-debug.log

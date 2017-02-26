@@ -6,6 +6,24 @@ The [Swagger](http://swagger.io/) definitions of the API is found under ./docs/a
 
 Try the live demo of the API [here](http://petstore.swagger.io/?url=https://raw.githubusercontent.com/seanes/theNodeProject/master/docs/api/api.json)
 
+## Tests
+
+Uses [Nightwatch](http://nightwatchjs.org/) together with Selenium and appropriate WebDriver for UI testing.
+
+**Note:** Java is required in order to run Selenium locally
+
+#### Smoke-test
+
+Follow these steps to run:
+
+```
+npm install
+npm run dev
+npm run smoke-test
+```
+
+#### End-to-end
+
 ### Exercises, part 2
 
 #### a. React
