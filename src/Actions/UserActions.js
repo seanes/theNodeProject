@@ -54,9 +54,8 @@ UserActions.login = (email, password) => {
       dispatch(UserActions.getProfile())
       browserHistory.push('/');
     })
-    .catch(response => {
-      console.log('error', response);
-      alert('Incorrect username or password');
+    .catch(error => {
+      dispatch(receivedData(types.ERROR_USER_LOGIN, error.response.data.message));
     })
   }
 };
@@ -73,8 +72,8 @@ UserActions.signUp = (email, password) => {
     .then(response => {
       dispatch(receivedData(types.SUCCESS_USER_SIGNUP, response.message));
     })
-    .catch(response => {
-      dispatch(receivedData(types.ERROR_USER_SIGNUP, response.message));
+    .catch(error => {
+      dispatch(receivedData(types.ERROR_USER_SIGNUP, error.response.data.message));
     })
   }
 };

@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { UserActions } from '../Actions/';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import UserFeedback from '../Components/UserFeedback'
 
 class Login extends Component {
 
@@ -19,6 +19,8 @@ class Login extends Component {
     const inputStyle = {
       width: '100%'
     }
+
+    const { login } = this.props
 
     return (
       <div>
@@ -42,8 +44,9 @@ class Login extends Component {
             floatingLabelFixed
             floatingLabelText="Password"
           />
-          <RaisedButton primary type="submit" id="login-button" onClick={this.handleLogin.bind(this)} label="Login"/>
+          <RaisedButton primary type="submit" id="login-button" onClick={ e => this.handleLogin(e) } label="Login"/>
         </form>
+        <UserFeedback feedBack={login} />
         <div style={{marginTop: 20}}>
           <Link to="/forgot" style={{marginRight: 20}}>Forgot password?</Link>
           <Link to="/signup">Sign up</Link>
@@ -56,6 +59,7 @@ class Login extends Component {
 const mapStateToProps = state => {
   return {
     events: state.events.data,
+    login: state.user.login
   }
 };
 
