@@ -14,6 +14,16 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, { signup: { error: true, message: action.payLoad, success: false } })
     case types.RECEIVED_USER_PROFILE:
       return Object.assign({}, state, { profile: action.payLoad })
+    case types.SUCCESS_USER_FORGOT:
+      return Object.assign({}, state, { forgot: { error: false, message: action.payLoad, success: true } })
+    case types.ERROR_USER_FORGOT:
+      return Object.assign({}, state, { forgot: { error: true, message: action.payLoad, success: false } })
+    case types.FETCHING_USER_RESETPW:
+        return Object.assign({}, state, { reset: { diableBtn: true } })
+    case types.SUCCESS_USER_RESETPW:
+      return Object.assign({}, state, { reset: { error: false, message: '', success: true, diableBtn: false } })
+    case types.ERROR_USER_RESETPW:
+      return Object.assign({}, state, { reset: { error: true, message: action.payLoad, success: false, diableBtn: false } })
 
     default: return state;
   }

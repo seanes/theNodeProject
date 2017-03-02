@@ -189,7 +189,7 @@ router.route('/forgot')
             if(err)
                 next(err);
             if(!user)
-                res.status(200).json({message : "no user by this email"})
+                res.status(404).json({message : "no user by this email"})
             else{
                 user.resetPwToken = makeHash()
                 user.resetPwExpires = Date.now() + 3600000; // 1 hour
@@ -211,7 +211,7 @@ router.route('/forgot')
                         }
                         else{
                             res.status(200).json({
-                                email : user.email,
+                                // email : user.email,
                                 message : "check your mail"
                             });
                         }
@@ -226,16 +226,28 @@ router.route('/forgot/:id')
     .get((req, res, next) => {
         const id = req.params.id;
         User.findOne({resetPwToken : id, resetPwExpires: { $gt : Date.now() } }, (err, user) => {
+            console.log('user found', user)
             if(err)
                 res.status(200).json(err)
             if(!user)
                 res.status(200).json({message : "Token is invalid or has expired"})
             else{
+                
+                passport.serializeUser(function(user, done) {
+                    done(null, user.id);
+                });
+
+                passport.deserializeUser(function(id, done) {
+                     User.findById(id, function(err, user) {
+                        done(err, user);
+                    });
+                });
+
                 req.logIn(user, (err) => {
                     if(err)
                         next(err)
                     else{
-                        res.send(getMainPage(req.isAuthenticated()));
+                        res.redirect('/change-password');
                     }
                 });
             }
@@ -246,28 +258,32 @@ router.route('/forgot/:id')
 router.route('/reset')
     .post((req, res, next) => {
         const user = req.user;
+        if(req.body.pw.length > 3){
+            user.pw = bcrypt.hashSync(req.body.pw, bcrypt.genSaltSync(8), null)
+            user.resetPwToken = "";
 
-        user.pw = bcrypt.hashSync(req.body.pw, bcrypt.genSaltSync(8), null)
-        user.resetPwToken = "";
-
-        user.save().then((user) => {
-            const fullUrl = req.protocol + '://' + req.get('host');
-                    
-            const mailOptions = {
-                from: '"Sopra Steria Events" <events@soprasteria.com>', // sender address
-                to: user.email, // list of receivers
-                subject: 'Password is changed', // Subject line
-                text: "Your password has been changed on: " + fullUrl  , // plaintext body -
-            };
-            transporter.sendMail(mailOptions, (err, info) => {
-                if(err){
-                    next(err)
-                }
-                else{
-                    res.redirect(fullUrl + '/api/events')
-                }
-            });
-        })
+            user.save().then((user) => {
+                const fullUrl = req.protocol + '://' + req.get('host');
+                        
+                const mailOptions = {
+                    from: '"Sopra Steria Events" <events@soprasteria.com>', // sender address
+                    to: user.email, // list of receivers
+                    subject: 'Password is changed', // Subject line
+                    text: "Your password has been changed on: " + fullUrl  , // plaintext body -
+                };
+                transporter.sendMail(mailOptions, (err, info) => {
+                    if(err){
+                        next(err);
+                    }
+                    else{
+                         res.status(200).send({message: 'Password is changed'})
+                    }
+                });
+            })
+        }
+    else{
+        res.status(404).send({message: 'Must be more that 3 chars'})
+    }
     });
 
 export default router;

@@ -49,6 +49,14 @@ router.get('/forgot', (req, res) => {
     res.send(getMainPage(req.isAuthenticated()))
 });
 
+router.get('/change-password', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login')
+  } else {
+    res.send(getMainPage(req.isAuthenticated()))
+  }
+});
+
 router.get('/login', (req, res) => {
   res.send(getMainPage(req.isAuthenticated()))
 });

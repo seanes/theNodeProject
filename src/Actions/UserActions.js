@@ -91,6 +91,41 @@ UserActions.getProfile = () => {
   }
 };
 
+UserActions.forgotPw = (email) => {
+  return dispatch => {
+    const payLoad = {
+      email
+    };
+    axios.post('/api/user/forgot', payLoad, {
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(response => {
+      dispatch(receivedData(types.SUCCESS_USER_FORGOT, response.data.message));
+    })
+    .catch(err => {
+      dispatch(receivedData(types.ERROR_USER_FORGOT, err.response.data.message));
+    })
+  }
+}
+
+UserActions.changePw = (pw) => {
+  return dispatch => {
+    dispatch(receivedData(types.FETCHING_USER_RESETPW));
+    const payLoad = {
+      pw
+    };
+    axios.post('/api/user/reset', payLoad, {
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(response => {
+      dispatch(receivedData(types.SUCCESS_USER_RESETPW, response.data.message));
+    })
+    .catch(err => {
+      dispatch(receivedData(types.ERROR_USER_RESETPW, err.response.data.message));
+    })
+  }
+}
+
 export default UserActions;
 
 
