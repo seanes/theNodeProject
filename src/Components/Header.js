@@ -58,7 +58,7 @@ class Header extends React.Component {
 
     return (
       <div className="header">
-        <div className="title">The Node Project</div>
+        <div className="title"> The Node Project</div>
         {
           isUserLoggedIn
           ?

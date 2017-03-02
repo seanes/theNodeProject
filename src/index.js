@@ -13,6 +13,8 @@ import Events from './Routes/Events';
 import Event from './Routes/Event';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import NewEvent from './Routes/NewEvent';
+import Forgot from './Routes/Forgot';
+import ChangePw from './Routes/ChangePw';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
@@ -31,6 +33,8 @@ render(
           <Route path="events" component={Events}/>
           <Route path="/events/:eventId" component={Event}/>
           <Route path="/profile" component={Profile}/>
+          <Route path="/forgot" component={Forgot}/>
+          <Route path="/change-password" component={ChangePw}/>
         </Route>
       </Router>
     </Provider>,

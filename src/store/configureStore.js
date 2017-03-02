@@ -13,7 +13,11 @@ const configureStore = () => {
           signup: {
               error: false
           },
-          profile: null
+          profile: null,
+          forgot: {},
+          reset: {
+             diableBtn: false
+          },
         }
     };
     const loggerMiddleware = createLogger()

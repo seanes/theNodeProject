@@ -42,6 +42,7 @@ class Login extends Component {
           />
           <RaisedButton primary type="submit" id="login-button" onClick={ e => this.handleLogin(e) } label="Login"/>
         </form>
+
         <UserFeedback feedBack={login} />
         <div style={{marginTop: 20}}>
           <Link to="/forgot" style={{marginRight: 20}}>Forgot password?</Link>
