@@ -226,7 +226,6 @@ router.route('/forgot/:id')
     .get((req, res, next) => {
         const id = req.params.id;
         User.findOne({resetPwToken : id, resetPwExpires: { $gt : Date.now() } }, (err, user) => {
-            console.log('user found', user)
             if(err)
                 res.status(200).json(err)
             if(!user)

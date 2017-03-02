@@ -66,9 +66,10 @@ class Profile extends React.Component {
   render() {
 
     const { profile } = this.props;
-    const { profile_img, name, description } = this.state
 
     if (!profile) return null;
+
+    const { profile_img, name, description } = this.state
 
     return (
       <div>
@@ -89,13 +90,13 @@ class Profile extends React.Component {
           <Paper zDepth={1} style={{display: 'block', marginTop: 20}}>
             <div className="form">
               <TextField
-                value={ name }
+                value={ name || ''}
                 floatingLabelText="Name"
                 fullWidth={true}
                 onChange={this.handleChangeName.bind(this)}
               />
               <TextField
-                value={ description }
+                value={ description || ''}
                 floatingLabelText="Description"
                 rows={3}
                 fullWidth={true}
