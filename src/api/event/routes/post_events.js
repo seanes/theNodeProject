@@ -38,4 +38,26 @@ router.route('/')
         })
     });
 
+router.route('/:id/participate')
+.post((req, res) => {
+  const { id } = req.params;
+  let user_id = req.user.id
+
+  Event.findByIdAndUpdate(id, { $addToSet: { participants: user_id }}, (err, doc) => {
+
+   if (err) {
+       res.status(500)
+   } else {
+     doc.save( (err, event) => {
+       if (!err) {
+         res.status(200).json(event);
+       } else {
+         res.status(500).json(err);
+       }
+     })
+   }
+
+  })
+});
+
 export default router;

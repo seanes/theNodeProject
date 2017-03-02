@@ -1,21 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { EventsActions } from '../Actions/';
+import EventItem from '../Components/EventItem'
 
 class Events extends React.Component {
 
   componentWillMount() {
-    const { events, getEvents } = this.props
-    if (!events || !events.length) {
-      getEvents();
-    }
+    const {  getEvents } = this.props
+    getEvents();
   }
 
   render() {
     const { events } = this.props
     return (
       <div>
-        Events { events ? events.length : null }
+        {
+          events.map( event  => (
+            <EventItem key={event.id} event={event} />
+          ))
+        }
       </div>
     )
   }
