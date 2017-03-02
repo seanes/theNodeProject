@@ -18,25 +18,21 @@ class SignUp extends React.Component {
 
     const { signup } = this.props;
 
-    const inputStyle = {
-      width: '100%'
-    }
-
     return (
       <div>
-        <form className="login-form" autoComplete="off" onSubmit={(event) => this.handleLogin(event)}>
+        <form className="login-form" autoComplete="off" onSubmit={ event => this.handleLogin(event)}>
           <TextField
             id="email"
             ref="email"
             defaultValue={""}
-            style={inputStyle}
+            fullWidth={true}
             name="email"
             floatingLabelFixed
             floatingLabelText="E-mail"
           />
           <TextField
             id="password"
-            style={inputStyle}
+            fullWidth={true}
             ref="password"
             defaultValue={""}
             type="password"

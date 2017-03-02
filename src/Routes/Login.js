@@ -16,10 +16,6 @@ class Login extends Component {
 
   render() {
 
-    const inputStyle = {
-      width: '100%'
-    }
-
     const { login } = this.props
 
     return (
@@ -29,14 +25,14 @@ class Login extends Component {
             id="email"
             ref="email"
             defaultValue={""}
-            style={inputStyle}
+            fullWidth={true}
             name="email"
             floatingLabelFixed
             floatingLabelText="E-mail"
           />
           <TextField
             id="password"
-            style={inputStyle}
+            fullWidth={true}
             ref="password"
             defaultValue={""}
             type="password"
