@@ -17,7 +17,25 @@ EventsActions.getEvents = () => {
       dispatch(receivedData('RECEIVED_EVENTS', response.data))
     })
     .catch( (response) => {
-      // do something here
+      console.log("err", response)
+    })
+  }
+}
+
+EventsActions.participateForEvent = id => {
+  return function (dispatch) {
+    axios.post(`/api/events/${id}/participate`)
+      .then( response => {
+        console.log(response)
+      })
+  }
+}
+
+EventsActions.unParticipateForEvent = id => {
+  return function (dispatch) {
+    axios.post(`/api/events/${id}/decline`)
+    .then( response => {
+      console.log(response)
     })
   }
 }

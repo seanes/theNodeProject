@@ -6,7 +6,7 @@ class EventItem extends React.Component {
 
   render() {
 
-    const { event } = this.props
+    const { event, handleParticipate } = this.props
 
     const availableSpots = event.capacity - event.participants.length
     const deadlineIsReached = new Date(event.participation_deadline) < Date.now()
@@ -17,9 +17,14 @@ class EventItem extends React.Component {
         <div> { event.description } </div>
         <div className="date"> { new Date(event.event_date).toString() } </div>
         <div> { event.event_type } </div>
-        <div> { availableSpots }  of { event.capacity } available spots </div>
+        <div> { availableSpots }  of { event.capacity } free spots </div>
         <div>
-          <RaisedButton disabled={!availableSpots || deadlineIsReached} label="Participate" primary={true} />
+          <RaisedButton
+            disabled={!availableSpots || deadlineIsReached}
+            label="Participate"
+            primary={true}
+            onClick={ () => handleParticipate(event._id) }
+          />
         </div>
       </div>
     )

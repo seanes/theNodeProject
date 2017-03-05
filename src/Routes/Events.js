@@ -10,13 +10,21 @@ class Events extends React.Component {
     getEvents();
   }
 
+  handleParticipate(eventId) {
+    const { dispatch } = this.props
+    dispatch(EventsActions.participateForEvent(eventId));
+  }
+
   render() {
     const { events } = this.props
     return (
       <div>
         {
           events.map( event  => (
-            <EventItem key={event.id} event={event} />
+            <EventItem
+              key={event._id} event={event}
+              handleParticipate={this.handleParticipate.bind(this)}
+            />
           ))
         }
       </div>
@@ -32,7 +40,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getEvents: () => dispatch(EventsActions.getEvents())
+    getEvents: () => dispatch(EventsActions.getEvents()),
+    dispatch: dispatch
   }
 }
 

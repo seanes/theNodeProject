@@ -6,15 +6,18 @@ const router = express.Router();
 
 router.route('/:id/participate')
 .post((req, res) => {
-  const { id } = req.params;
-  let user_id = req.user.id
 
-  Event.findByIdAndUpdate(id, { $addToSet: { participants: user_id }}, { new: true }, (err, doc) => {
+  const { id } = req.params;
+  let user_id = req.user._id;
+
+  Event.findByIdAndUpdate(id, { $addToSet: { participants: user_id }}, { new: false }, (err, doc) => {
 
     if (err) {
       res.status(500)
-    } else {
+    } else if (doc) {
       res.status(200).json(doc)
+    } else {
+      res.status(404)
     }
 
   })
@@ -23,9 +26,9 @@ router.route('/:id/participate')
 router.route('/:id/decline')
 .post((req, res) => {
   const { id } = req.params;
-  let user_id = req.user.id
+  let user_id = req.user._id;
 
-  Event.findByIdAndUpdate(id, { $pull: { participants: user_id }}, { new: true }, (err, doc) => {
+  Event.findByIdAndUpdate(id, { $pull: { participants: user_id }}, { new: false }, (err, doc) => {
 
     if (err) {
       res.status(500)

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as types from './types';
 import { browserHistory } from 'react-router';
+import EventsActions from './EventsActions'
 
 const receivedData = (type, data) => {
   return {
@@ -23,6 +24,13 @@ UserActions.logout = () => {
     })
   }
 };
+
+UserActions.getUserData = () => {
+  return dispatch => {
+    dispatch(UserActions.getProfile());
+    dispatch(EventsActions.getEvents());
+  }
+}
 
 UserActions.updateProfile = payLoad => {
 

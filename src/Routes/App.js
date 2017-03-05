@@ -13,11 +13,10 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    const { isUserLoggedIn, getEvents, getProfile } = this.props;
+    const { isUserLoggedIn, getUserData } = this.props;
 
     if (isUserLoggedIn) {
-      getEvents();
-      getProfile();
+      getUserData();
     }
   }
 
@@ -55,9 +54,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getEvents: () => dispatch(EventsActions.getEvents()),
-    logOut: () => dispatch(UserActions.logout()),
-    getProfile: () => dispatch(UserActions.getProfile()),
+    getUserData: () => dispatch(UserActions.getUserData()),
     dispatch: dispatch
   }
 }
