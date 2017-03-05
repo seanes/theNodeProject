@@ -34,7 +34,7 @@ app.use(express.static(__dirname + '/public')); // set the static files location
 
 const compiler = new webpack(webpackConfig)
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV == 'development') {
     app.use(require("webpack-dev-middleware")(compiler, {
         noInfo: true,stats: {colors: true},
         publicPath: webpackConfig.output.publicPath,

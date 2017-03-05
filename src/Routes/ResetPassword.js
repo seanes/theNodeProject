@@ -6,7 +6,7 @@ import { UserActions }  from '../Actions/';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-class ResetPw extends React.Component {
+class ResetPassword extends React.Component {
 
   handleChangePassword(event) {
     event.preventDefault();
@@ -62,10 +62,10 @@ class ResetPw extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     reset: state.user.reset
   }
 }
 
-export default connect(mapStateToProps)(ResetPw);
+export default connect(mapStateToProps)(ResetPassword);

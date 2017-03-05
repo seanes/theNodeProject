@@ -77,6 +77,7 @@ router.get('/events/:id', (req, res) => {
   }
 });
 
+
 router.get('/signup', (req, res) => {
   res.send(getMainPage(req.isAuthenticated()))
 });

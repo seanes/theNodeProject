@@ -1,6 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
-
 import Profile from '../model/Profile';
 
 const router = express.Router();
@@ -13,8 +11,8 @@ router.route('/')
         Profile.findOne({email : user}, (err, profile) => {
             if(err)
                 next(err)
-            else{
-                res.status(200).json(profile);
+            else {
+                res.status(200).json({ ...profile._doc, "userId": req.user._id });
             }
         })
     });

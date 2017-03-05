@@ -21,7 +21,7 @@ chai.use(chaiHttp);
 
 describe('Locations', () => {
 
-    beforeEach((done) => {
+    before((done) => {
         Location.remove({}, (err) => {
             done();
         });

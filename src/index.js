@@ -14,7 +14,7 @@ import Event from './Routes/Event';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import NewEvent from './Routes/NewEvent';
 import Forgot from './Routes/Forgot';
-import ChangePw from './Routes/ChangePw';
+import ChangePw from './Routes/ResetPassword';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);

@@ -1,0 +1,17 @@
+.event-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: calc( (1.3vw + 1.3vh) / 2);
+
+  .title {
+    font-weight: 600;
+  }
+
+  .date {
+    font-weight: 600;
+    font-size: 0.8em;
+  }
+}

@@ -1,5 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import MyEvents from '../Components/MyEvents.js'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import { browserHistory } from 'react-router';
+import MdEvent from 'material-ui/svg-icons/action/event';
+import FlatButton from 'material-ui/FlatButton';
 
 class Home extends React.Component {
 
@@ -7,9 +13,27 @@ class Home extends React.Component {
     return (
       <div>
         <Link className="createEvent" to="/events/new/">+ Create event</Link>
+        <MyEvents profile={this.props.profile} events={this.props.events} />
+        <FlatButton
+          icon={<MdEvent/>}
+          label="Events"
+          onClick={ () => browserHistory.push('/events/')}
+        />
+        <FloatingActionButton mini onClick={() => browserHistory.push('/events/new/')}>
+          <ContentAdd />
+        </FloatingActionButton>
       </div>
     )
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    events: state.events.data,
+    profile: state.user.profile
+  }
+}
+
+export default connect(mapStateToProps)(Home);
+
+
