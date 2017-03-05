@@ -35,7 +35,7 @@ chai.use(chaiHttp);
 
 describe('Events', () => {
 
-  beforeEach((done) => {
+  before( (done) => {
 
     Location.findOne({name : "Melkeveien"}, (err, doc) => {
       mockedEvent.event_location = doc._id;
@@ -45,10 +45,11 @@ describe('Events', () => {
       });
     }).then( () => {
       new Event(mockedEvent).save().then( (err, doc) => {
-        done();
+        console.log("Saved event", doc)
       })
+    }).then( () => {
+      done();
     })
-
 
   });
 
