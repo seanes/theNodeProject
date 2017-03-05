@@ -9,6 +9,7 @@
     "devW": "SET NODE_ENV=development&& node babel-server.js",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register ./tests/*/*",
     "smoke-test": "nightwatch --tag smoke",
+    "read-test": "nightwatch --tag read",
     "testW": "SET NODE_ENV=test&& mocha --compilers js:babel-core/register ./tests/*/*",
     "build": "NODE_ENV=production node -r babel-register node_modules/.bin/webpack --config=webpack.config.js",
     "buildW": "SET NODE_ENV=production node -r babel-register node_modules/.bin/webpack --config=webpack.config.js",

@@ -11,14 +11,14 @@ import Location from '../src/api/location/model/Location';
 User.count({}, (err, count) => {
     if(count === 0){
         User.create({
-            email : 'jorgen.braekke-admin@soprasteria.com',
-            pw : 'heiheiheihei',
+            email : 'test@soprasteria.com',
+            pw : '$2a$08$fCFCF9mjMD3sHj8SaUd4I.W2Mjo1sGTYtHq4exJe7rrSFBUZ7VuWS',
             role : 'member',
             activationHash : "MNCU.0Y0AZ.RxX8izL0CvE~dx7ZAp_eCrab_eV0v~cV~lqJO1l",          
         },
         {
             email : 'sean.scully-admin@soprasteria.com',
-            pw : 'mornmornmorn',
+            pw : '$2a$08$fCFCF9mjMD3sHj8SaUd4I.W2Mjo1sGTYtHq4exJe7rrSFBUZ7VuWS',
             role : 'member',
             activationHash : "MNCU.0Y0AZ.RxX8izL0CvE~dx7ZAp_eCrab_eV0v~cV~lqJO1l",          
         }
@@ -49,8 +49,8 @@ Location.count({}, (err, count) => {
                 if(count == 0){
                     //create profiles
                     Profile.create({
-                        email : 'jorgen.braekke-admin@soprasteria.com',
-                        name : 'Jørgen Brække'          
+                        email : 'test@soprasteria.com',
+                        name : 'Test Testesen'          
                     },
                     {
                         email : 'sean.scully-admin@soprasteria.com',
@@ -61,7 +61,7 @@ Location.count({}, (err, count) => {
                             Location.findOne({name : "MELKEVEIEN"}, (err, location) => {
                                 Event.count({}, (err, count) => {
                                     if(count === 0){
-                                        Profile.find({$or:[ {email: 'sean.scully-admin@soprasteria.com'}, {email: 'jorgen.braekke-admin@soprasteria.com'}]}, (err, profiles) =>{
+                                        Profile.find({$or:[ {email: 'sean.scully-admin@soprasteria.com'}, {email: 'test@soprasteria.com'}]}, (err, profiles) =>{
                                             if(err)
                                                 next(err)
                                             if(profiles.length === 2){

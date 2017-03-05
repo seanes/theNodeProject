@@ -38,4 +38,16 @@ router.route('/')
         })
     });
 
+router.route('/:id/participant')
+    .post((req, res) => {
+         Event.findById(req.params.id, (err, doc) => {
+             doc.participants.push('587e6bc8f2fdc76690cbeeb6');
+             doc.save((err, doc) => {
+                 if(err)
+                    res.status(500).json(err)
+                  res.status(200).send(doc);
+             });
+         })
+    })
+
 export default router;

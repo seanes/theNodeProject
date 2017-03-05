@@ -73,7 +73,7 @@ class EventForm extends React.Component {
           <input
             defaultValue={event_date}
             onChange={(e) => { this.setState({event_date: e.target.value})}}
-            type="datetime-local"
+            type="date"
           />
           <input
             defaultValue={durationHours}
@@ -83,7 +83,7 @@ class EventForm extends React.Component {
           <input
             defaultValue={participation_deadline}
             onChange={(e) => { this.setState({participation_deadline: e.target.value})}}
-            type="datetime-local"
+            type="date"
           />
           <button
             type="submit"
