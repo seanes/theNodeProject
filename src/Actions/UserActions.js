@@ -60,6 +60,7 @@ UserActions.login = (email, password) => {
     .then(response => {
       dispatch(receivedData(types.USER_LOGGED_IN, null));
       dispatch(UserActions.getProfile())
+      dispatch(EventsActions.getEvents())
       browserHistory.push('/');
     })
     .catch(error => {

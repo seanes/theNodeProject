@@ -31,7 +31,7 @@ EventsActions.participateForEvent = id => {
   }
 }
 
-EventsActions.unParticipateForEvent = id => {
+EventsActions.declineEvent = id => {
   return function (dispatch) {
     axios.post(`/api/events/${id}/decline`)
     .then( response => {

@@ -14,7 +14,6 @@ class App extends React.Component {
 
   componentWillMount() {
     const { isUserLoggedIn, getUserData } = this.props;
-
     if (isUserLoggedIn) {
       getUserData();
     }
