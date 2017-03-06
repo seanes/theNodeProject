@@ -26,7 +26,7 @@ EventsActions.participateForEvent = id => {
   return function (dispatch) {
     axios.post(`/api/events/${id}/participate`)
       .then( response => {
-        console.log(response.data)
+        dispatch(receivedData('UPDATE_EVENT', response.data))
       })
   }
 }
@@ -35,7 +35,7 @@ EventsActions.declineEvent = id => {
   return function (dispatch) {
     axios.post(`/api/events/${id}/decline`)
     .then( response => {
-      console.log(response)
+      dispatch(receivedData('UPDATE_EVENT', response.data))
     })
   }
 }

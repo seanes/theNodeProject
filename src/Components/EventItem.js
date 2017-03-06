@@ -23,6 +23,7 @@ class EventItem extends React.Component {
             ? <RaisedButton
                 disabled={!availableSpots || deadlineIsReached}
                 label="Participate"
+                  style={{minWidth: '8vw'}}
                 primary={true}
                 onClick={ () => handleParticipate(event._id) }
             />
@@ -30,6 +31,7 @@ class EventItem extends React.Component {
                 disabled={deadlineIsReached}
                 label="Decline"
                 secondary={true}
+                style={{minWidth: '8vw'}}
                 onClick={ () => handleDecline(event._id) }
             />
           }

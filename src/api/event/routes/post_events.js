@@ -10,7 +10,7 @@ router.route('/:id/participate')
   const { id } = req.params;
   let user_id = req.user._id;
 
-  Event.findByIdAndUpdate(id, { $addToSet: { participants: user_id }}, { new: false }, (err, doc) => {
+  Event.findByIdAndUpdate(id, { $addToSet: { participants: user_id }}, { new: true }, (err, doc) => {
 
     if (err) {
       res.status(500)
@@ -28,7 +28,7 @@ router.route('/:id/decline')
   const { id } = req.params;
   let user_id = req.user._id;
 
-  Event.findByIdAndUpdate(id, { $pull: { participants: user_id }}, { new: false }, (err, doc) => {
+  Event.findByIdAndUpdate(id, { $pull: { participants: user_id }}, { new: true }, (err, doc) => {
 
     if (err) {
       res.status(500)
