@@ -165,12 +165,6 @@ class EventForm extends React.Component {
             type="date"
             name="deadline"
           />
-          <button
-            type="submit"
-            className="submit"
-          >Create
-          </button>
-
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
             <div>Hosts: </div>
             {chipData.map( chip => (
@@ -193,6 +187,11 @@ class EventForm extends React.Component {
             dataSourceConfig={dataSourceConfig}
             onNewRequest={this.handleAddUser.bind(this)}
           />
+          <button
+            type="submit"
+            className="submit"
+          >Create
+          </button>
         </form>
       </div>
     )
