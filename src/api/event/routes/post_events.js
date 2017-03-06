@@ -47,6 +47,7 @@ router.route('/')
     if(err)
       next(err)
 
+
     let event = new Event({
       user_code : inc.seq,
       event_name : req.body.event_name,
@@ -59,7 +60,7 @@ router.route('/')
       event_type: req.body.event_type,
       event_location: req.body.event_location,
       participants: [],
-      hosts:  req.body.hosts || [ req.user._id ]
+      hosts: req.body.hosts
     });
 
     //save event

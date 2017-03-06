@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 import axios from 'axios';
+import Chip from 'material-ui/Chip';
+
 
 class EventForm extends React.Component {
 
@@ -13,9 +15,28 @@ class EventForm extends React.Component {
       event_date: '',
       participation_deadline: '',
       durationHours: 0,
-      event_type: 'talk',
       hosts: [],
-      hosts_suggestions: []
+      hosts_suggestions: [],
+      chipData: [],
+      event_type: 'talk',
+      event_location: null
+    }
+  }
+
+  serializeEvent = () => {
+
+    const { event_name, description, capacity, event_date, participation_deadline, durationHours, chipData, event_location, event_type } = this.state
+
+    return {
+      event_name,
+      description,
+      capacity,
+      event_date,
+      participation_deadline,
+      durationHours,
+      event_type,
+      event_location: event_location || this.props.locations[0].id,
+      hosts: chipData.map( chip => chip.valueKey )
     }
   }
 
@@ -26,22 +47,41 @@ class EventForm extends React.Component {
   };
 
   handleSearchProfile = query => {
-
     if (query) {
       axios.get('/api/profile/?search=' + query)
       .then( result => {
         this.setState({
-          host_suggestions: result.data.results
+          hosts_suggestions: result.data.results
         })
       })
     }
-
   }
+
+  handleAddUser(chip, index) {
+
+    if (index < 0) return
+
+    const { chipData } = this.state
+
+    this.refs.autocomplete.setState({ searchText: ''})
+
+    this.setState({
+      chipData: chipData.concat(chip)
+    })
+  }
+
+  handleRemoveChip(key) {
+    const { chipData } = this.state
+    const updatedList = chipData.filter( chip => chip.valueKey !== key)
+    this.setState({
+      chipData: updatedList
+    })
+  }
+
 
   render() {
 
     const { eventTypes, locations } = this.props;
-    const { host_suggestions } = this.state
 
     if (!locations) return null
 
@@ -50,10 +90,6 @@ class EventForm extends React.Component {
       value: 'valueKey',
     };
 
-    const dataSource = host_suggestions ? host_suggestions.map ( suggestion => {
-      return { textKey: suggestion.name, valueKey: suggestion.userId }
-    }) : []
-
     const {
       event_name,
       description,
@@ -61,12 +97,20 @@ class EventForm extends React.Component {
       event_type,
       event_date,
       participation_deadline,
-      durationHours
+      event_location,
+      durationHours,
+      hosts_suggestions,
+      chipData
     } = this.state
+
+
+    const dataSource = hosts_suggestions ? hosts_suggestions.map ( suggestion => {
+        return { textKey: suggestion.name, valueKey: suggestion._id }
+      }) : []
 
     return (
       <div>
-        <form className="event-form" onSubmit={(e) => this.props.handleCreateEvent(e, this.state)}>
+        <form className="event-form" onSubmit={(e) => this.props.handleCreateEvent(e, this.serializeEvent())}>
           <input
             onChange={(e) => { this.setState({event_name: e.target.value})}}
             type='text'
@@ -97,7 +141,7 @@ class EventForm extends React.Component {
             { eventTypes.map( (type, i) => <option key={'type'+i} value={type}>{type}</option> )}
           </select>
           <select
-            defaultValue={locations[0].id}
+            defaultValue={event_location}
             name="location"
             onChange={(e) => { this.setState({event_location: e.target.value})}}
           >
@@ -126,12 +170,28 @@ class EventForm extends React.Component {
             className="submit"
           >Create
           </button>
+
+          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <div>Hosts: </div>
+            {chipData.map( chip => (
+              <Chip
+                key={chip.valueKey}
+                style={{margin: 5}}
+                onRequestDelete={() => this.handleRemoveChip(chip.valueKey)}
+              >
+                { chip.textKey }
+             </Chip>
+            ))}
+          </div>
           <AutoComplete
-            hintText="Type anything"
-            filter={AutoComplete.noFilter}
+            ref="autocomplete"
+            hintText="Add host"
+            filter={ (searchText, key) => chipData.map( chip => chip.textKey).indexOf(key) < 0}
             dataSource={dataSource}
             onUpdateInput={this.handleSearchProfile.bind(this)}
+            maxSearchResults={7}
             dataSourceConfig={dataSourceConfig}
+            onNewRequest={this.handleAddUser.bind(this)}
           />
         </form>
       </div>

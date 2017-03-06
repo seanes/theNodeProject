@@ -8,7 +8,7 @@ class HostedByMe extends React.Component {
 
     if (!profile) return null
 
-    const myHostedEvents = events.filter( event => event.hosts.indexOf(profile.userId) > -1)
+    const myHostedEvents = events.filter( event => event.hosts.map( host => host._id).indexOf(profile._id) > -1)
 
     return (
       <div>
