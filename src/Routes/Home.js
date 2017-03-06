@@ -12,7 +12,6 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <Link className="createEvent" to="/events/new/">+ Create event</Link>
         <MyEvents profile={this.props.profile} events={this.props.events} />
         <FlatButton
           icon={<MdEvent/>}

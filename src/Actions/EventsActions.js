@@ -26,7 +26,7 @@ EventsActions.participateForEvent = id => {
   return function (dispatch) {
     axios.post(`/api/events/${id}/participate`)
       .then( response => {
-        console.log(response)
+        console.log(response.data)
       })
   }
 }
