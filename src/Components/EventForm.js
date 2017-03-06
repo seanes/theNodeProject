@@ -10,7 +10,6 @@ class EventForm extends React.Component {
       capacity: 0,
       event_date: '',
       participation_deadline: '',
-      event_location: null,
       durationHours: 0,
       event_type: 'talk',
     }
@@ -25,12 +24,14 @@ class EventForm extends React.Component {
   render() {
 
     const { eventTypes, locations } = this.props
+
+    if (!locations) return null
+
     const {
       event_name,
       description,
       capacity,
       event_type,
-      event_location,
       event_date,
       participation_deadline,
       durationHours
@@ -43,11 +44,13 @@ class EventForm extends React.Component {
             onChange={(e) => { this.setState({event_name: e.target.value})}}
             type='text'
             defaultValue={event_name}
+            name="name"
             placeholder='Name'
           />
           <textarea
             onChange={(e) => { this.setState({description: e.target.value})}}
             type='text'
+            name="description"
             placeholder='Description'
             defaultValue={description}
             rows='5'
@@ -55,17 +58,20 @@ class EventForm extends React.Component {
           <input
             onChange={(e) => { this.setState({capacity: e.target.value})}}
             type='number'
+            name="capacity"
             placeholder='Capacity'
             defaultValue={capacity}
           />
           <select
             defaultValue={event_type}
+            name="type"
             onChange={(e) => { this.setState({event_type: e.target.value.toLowerCase()})}}
           >
             { eventTypes.map( (type, i) => <option key={'type'+i} value={type}>{type}</option> )}
           </select>
           <select
-            defaultValue={event_location}
+            defaultValue={locations[0].id}
+            name="location"
             onChange={(e) => { this.setState({event_location: e.target.value})}}
           >
             { locations.map( (location, i) => <option key={location._id} value={location._id}>{location.name}</option> )}
@@ -74,19 +80,23 @@ class EventForm extends React.Component {
             defaultValue={event_date}
             onChange={(e) => { this.setState({event_date: e.target.value})}}
             type="date"
+            name="date"
           />
           <input
             defaultValue={durationHours}
             onChange={(e) => { this.setState({durationHours: e.target.value})}}
             type="time"
+            name="duration"
           />
           <input
             defaultValue={participation_deadline}
             onChange={(e) => { this.setState({participation_deadline: e.target.value})}}
             type="date"
+            name="deadline"
           />
           <button
             type="submit"
+            className="submit"
           >Create
           </button>
         </form>
