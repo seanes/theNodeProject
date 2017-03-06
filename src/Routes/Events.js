@@ -23,7 +23,7 @@ class Events extends React.Component {
   render() {
     const { events, userId } = this.props
     return (
-      <div>
+      <div className="event-items">
         {
           events.map( event  => (
             <EventItem

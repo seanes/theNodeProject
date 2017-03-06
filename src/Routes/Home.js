@@ -18,9 +18,10 @@ class Home extends React.Component {
         <FlatButton
           icon={<MdEvent/>}
           label="Events"
+          className="allEvents"
           onClick={ () => browserHistory.push('/events/')}
         />
-        <FloatingActionButton mini onClick={() => browserHistory.push('/events/new/')}>
+        <FloatingActionButton className="createEvent" mini onClick={() => browserHistory.push('/events/new/')}>
           <ContentAdd />
         </FloatingActionButton>
       </div>
