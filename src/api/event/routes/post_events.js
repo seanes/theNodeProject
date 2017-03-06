@@ -59,7 +59,7 @@ router.route('/')
       event_type: req.body.event_type,
       event_location: req.body.event_location,
       participants: [],
-      hosts:  req.body.hosts
+      hosts:  req.body.hosts || [ req.user._id ]
     });
 
     //save event

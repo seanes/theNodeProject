@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MyEvents from '../Components/MyEvents.js'
+import MyEvents from '../Components/MyEvents.js';
+import HostedByMe from '../Components/HostedByMe.js';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import { browserHistory } from 'react-router';
@@ -13,6 +14,7 @@ class Home extends React.Component {
     return (
       <div>
         <MyEvents profile={this.props.profile} events={this.props.events} />
+        <HostedByMe profile={this.props.profile} events={this.props.events} />
         <FlatButton
           icon={<MdEvent/>}
           label="Events"

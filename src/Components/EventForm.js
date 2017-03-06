@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import AutoComplete from 'material-ui/AutoComplete';
+import axios from 'axios';
 
 class EventForm extends React.Component {
 
@@ -12,6 +14,8 @@ class EventForm extends React.Component {
       participation_deadline: '',
       durationHours: 0,
       event_type: 'talk',
+      hosts: [],
+      hosts_suggestions: []
     }
   }
 
@@ -21,11 +25,34 @@ class EventForm extends React.Component {
     handleCreateEvent: PropTypes.func.isRequired,
   };
 
+  handleSearchProfile = query => {
+
+    if (query) {
+      axios.get('/api/profile/?search=' + query)
+      .then( result => {
+        this.setState({
+          host_suggestions: result.data.results
+        })
+      })
+    }
+
+  }
+
   render() {
 
-    const { eventTypes, locations } = this.props
+    const { eventTypes, locations } = this.props;
+    const { host_suggestions } = this.state
 
     if (!locations) return null
+
+    const dataSourceConfig = {
+      text: 'textKey',
+      value: 'valueKey',
+    };
+
+    const dataSource = host_suggestions ? host_suggestions.map ( suggestion => {
+      return { textKey: suggestion.name, valueKey: suggestion.userId }
+    }) : []
 
     const {
       event_name,
@@ -99,6 +126,13 @@ class EventForm extends React.Component {
             className="submit"
           >Create
           </button>
+          <AutoComplete
+            hintText="Type anything"
+            filter={AutoComplete.noFilter}
+            dataSource={dataSource}
+            onUpdateInput={this.handleSearchProfile.bind(this)}
+            dataSourceConfig={dataSourceConfig}
+          />
         </form>
       </div>
     )

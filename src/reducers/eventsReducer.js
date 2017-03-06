@@ -16,6 +16,7 @@ export default (state = initialState, action) => {
         locations: action.payLoad
       });
 
+
     case 'UPDATE_EVENT':
       const updatedEvent = action.payLoad
       let data  = state.data.slice()

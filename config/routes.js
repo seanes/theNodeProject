@@ -4,11 +4,12 @@ import getMainPage from '../src/mainPage'
 import eventsGetRouter from '../src/api/event/routes/get_events';
 import eventsPostRouter from '../src/api/event/routes/post_events';
 import userPostRouter from '../src/api/user/routes/post_user';
+import profileGetRouter from '../src/api/profile/routes/get_profile';
 import validateUserRouter from '../src/api/user/routes/get_validate_user';
 import locationsGetRouter from '../src/api/location/routes/get_location';
 import locationsPostRouter from '../src/api/location/routes/post_location';
 
-import profileGetRouter from '../src/api/profile/routes/get_profile';
+import meGetRouter from '../src/api/profile/routes/get_me';
 import profilePostRouter from '../src/api/profile/routes/post_profile';
 
 import adminPostRouter from '../src/api/admin/routes/post_admin';
@@ -31,6 +32,8 @@ const isLoggedInAndAdmin = (req, res, next) => {
 }
 
 router.use('/api/user', userPostRouter);
+router.use('/api/profile', profileGetRouter);
+
 router.use('/api/validateUser', validateUserRouter);
 
 router.use('/api/events', isLoggedIn, eventsGetRouter);
@@ -39,7 +42,7 @@ router.use('/api/events', isLoggedIn, eventsPostRouter);
 router.use('/api/locations', isLoggedIn, locationsGetRouter);
 router.use('/api/locations', isLoggedIn, locationsPostRouter);
 
-router.use('/api/me', isLoggedIn, profileGetRouter);
+router.use('/api/me', isLoggedIn, meGetRouter);
 router.use('/api/me', isLoggedIn, profilePostRouter);
 
 router.use('/api/admin', isLoggedInAndAdmin, adminPostRouter);

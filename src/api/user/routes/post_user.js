@@ -1,12 +1,9 @@
 //vendors
 import express from 'express';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt-nodejs';
 import passport from 'passport';
 import nodemailer from 'nodemailer';
 import async from 'async';
-import path from 'path';
 
 //config
 const router = express.Router();
@@ -15,7 +12,6 @@ const router = express.Router();
 import User from '../model/User';
 import Profile from '../../profile/model/Profile';
 import Partner from '../../profile/model/Partner'
-import getMainPage from '../../../mainPage'
 
 const test = process.env.NODE_ENV === 'test';
 
@@ -113,7 +109,8 @@ router.route('/')
                     const profile = new Profile({
                         name : partner.name,
                         description : partner.depatment,
-                        email : user.email
+                        email : user.email,
+                        userId: user._id
                     });
 
                     profile.save().then((profile) =>{

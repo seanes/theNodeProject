@@ -1,21 +1,21 @@
 import express from 'express';
-import Profile from '../model/Profile';
+import Profile from '../../profile/model/Profile';
 
 const router = express.Router();
 
 router.route('/')
-    .get((req, res, next) => {
+.get((req, res) => {
 
-        const user = process.env.NODE_ENV === 'test' ? 'jorgen.braekke@soprasteria.com' : req.user.email
-        const userId = process.env.NODE_ENV === 'test' ? '' : req.user._id
+  const searchQuery = req.query.search
+  const query = new RegExp(searchQuery, "ig")
 
-        Profile.findOne({email : user}, (err, profile) => {
-            if(err)
-                next(err)
-            else {
-                res.status(200).json({ ...profile._doc, "userId": userId });
-            }
-        })
-    });
+  Profile.find({name: { $regex:  query } }, (err, profile) => {
+    if(err)
+      res.status(500).json({'error': err});
+    else {
+      res.status(200).json({results: profile})
+    }
+  })
+});
 
 export default router;
