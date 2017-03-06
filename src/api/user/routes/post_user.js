@@ -135,7 +135,6 @@ router.route('/')
             });
         },
         (err) => {
-            console.log("err is here")
             next(err);
         }
     ])

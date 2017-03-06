@@ -79,7 +79,7 @@ UserActions.signUp = (email, password) => {
       headers: {'Content-Type': 'application/json'}
     })
     .then(response => {
-      dispatch(receivedData(types.SUCCESS_USER_SIGNUP, response.message));
+      dispatch(receivedData(types.SUCCESS_USER_SIGNUP, response.data.message));
     })
     .catch(error => {
       dispatch(receivedData(types.ERROR_USER_SIGNUP, error.response.data.message));
