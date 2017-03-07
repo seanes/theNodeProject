@@ -28,8 +28,10 @@
       },
       "silent": false,
       "screenshots" : {
-        "enabled" : false,
-        "path" : ""
+        "enabled" : true,
+        "path" : "tests/nightwatch/screenshots",
+        "on_failure": true,
+        "on_error": true
       },
       "desiredCapabilities": {
         "browserName": "chrome",

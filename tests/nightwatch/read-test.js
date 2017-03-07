@@ -14,6 +14,6 @@ module.exports = {
       .click('.createEvent')
       .pause(1000)
       .assert.visible('.event-form')
-      .end();
+      .end()
   }
 }

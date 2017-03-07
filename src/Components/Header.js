@@ -62,7 +62,7 @@ class Header extends React.Component {
         {
           isUserLoggedIn
           ?
-            <div style={style}>
+            <div className="profile-drawer" style={style}>
               <IconButton
                 iconStyle={{color: '#fff'}}
                 onClick={() => { this.toggleMenu(true) }}
@@ -81,8 +81,8 @@ class Header extends React.Component {
               </IconButton>
               <Drawer width={200} openSecondary={true} open={this.state.open} >
                 <AppBar title="Menu" onClick={() => { this.toggleMenu(false)}} />
-                <MenuItem onTouchTap={ this.handleNavigateToProfile.bind(this) }>Profile</MenuItem>
-                <MenuItem onTouchTap={ this.handleLogOut.bind(this) }>Log out</MenuItem>
+                <MenuItem className="profile-page" onTouchTap={ this.handleNavigateToProfile.bind(this) }>Profile</MenuItem>
+                <MenuItem className="log-out" onTouchTap={ this.handleLogOut.bind(this) }>Log out</MenuItem>
               </Drawer>
             </div>
             : null

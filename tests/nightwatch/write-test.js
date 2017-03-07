@@ -9,7 +9,7 @@ module.exports = {
     .waitForElementVisible('.profile', 2000)
     .assert.visible('.profile')
   },
-  'Display event form' : function (browser) {
+  'Display event form and submit a event' : function (browser) {
     browser
       .click('.createEvent')
       .waitForElementVisible('.event-form', 1000)
@@ -29,6 +29,5 @@ module.exports = {
       .elements('css selector', '.event-items .event-item', (result) =>{
         browser.assert.ok(result.value.length > 0);
       })
-      .end();
   }
 }

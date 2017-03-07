@@ -93,18 +93,20 @@ class Profile extends React.Component {
                 value={ name || ''}
                 floatingLabelText="Name"
                 fullWidth={true}
+                className="name"
                 onChange={this.handleChangeName.bind(this)}
               />
               <TextField
                 value={ description || ''}
                 floatingLabelText="Description"
                 rows={3}
+                className="description"
                 fullWidth={true}
                 onChange={this.handleChangeDescription.bind(this)}
               />
             </div>
           </Paper>
-          <RaisedButton label="Update profile" onClick={this.handleUpdateProfile.bind(this)} />
+          <RaisedButton className="submit" label="Update profile" onClick={this.handleUpdateProfile.bind(this)} />
         </div>
       </div>
     )
