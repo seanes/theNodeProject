@@ -60,7 +60,7 @@
     "redux-thunk": "^2.1.0",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.12.2"
+    "webpack": "^2.3.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",
