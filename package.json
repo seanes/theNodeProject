@@ -39,7 +39,7 @@
     "connect-flash": "^0.1.1",
     "css-loader": "^0.26.1",
     "express": "^4.14.0",
-    "express-session": "^1.15.0",
+    "express-session": "^1.15.3",
     "image-webpack-loader": "^3.1.0",
     "material-ui": "^0.16.7",
     "mongoose": "^4.8.5",
